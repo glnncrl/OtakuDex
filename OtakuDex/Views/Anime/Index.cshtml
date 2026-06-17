@@ -1,0 +1,247 @@
+﻿@model IEnumerable<OtakuDex.Models.Anime>
+
+@{
+    ViewData["Title"] = "Collection";
+}
+
+<!-- Hero Banner -->
+<div style="position:relative; height:340px; overflow:hidden; display:flex; align-items:center; justify-content:center; margin-bottom:2rem;">
+
+    <div style="position:absolute; inset:0; display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(2,1fr); gap:3px; opacity:0.15;">
+        @{
+            var heroBg = new[] {
+                "/images/anime/aot.jpg", "/images/anime/fmab.jpg", "/images/anime/jjk.jpg", "/images/anime/vinland.jpg",
+                "/images/anime/spyfamily.jpg", "/images/anime/haikyuu.jpg", "/images/anime/yourlie.jpg", "/images/anime/demonslayer.jpg",
+                "/images/anime/demonslayer.jpg", "/images/anime/yourlie.jpg", "/images/anime/haikyuu.jpg", "/images/anime/spyfamily.jpg",
+                "/images/anime/vinland.jpg", "/images/anime/jjk.jpg", "/images/anime/fmab.jpg", "/images/anime/aot.jpg",
+            };
+        }
+        @foreach (var bg in heroBg)
+        {
+            <img src="@bg" style="width:100%; height:100%; object-fit:cover;" />
+        }
+    </div>
+
+    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,9,14,0.92) 0%, rgba(8,9,14,0.75) 50%, rgba(8,9,14,0.92) 100%);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,9,14,0.2) 0%, rgba(8,9,14,0.98) 100%);"></div>
+    <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(15,255,193,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(15,255,193,0.02) 1px, transparent 1px); background-size:40px 40px;"></div>
+    <div style="position:absolute; top:30%; left:20%; width:300px; height:300px; background:rgba(123,97,255,0.07); border-radius:50%; filter:blur(80px);"></div>
+    <div style="position:absolute; top:20%; right:20%; width:250px; height:250px; background:rgba(15,255,193,0.04); border-radius:50%; filter:blur(80px);"></div>
+
+    <div style="position:relative; z-index:1; text-align:center; padding:0 20px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.2); border-radius:20px; padding:5px 16px; font-size:0.68rem; letter-spacing:3px; color:#0FFFC1; text-transform:uppercase; font-weight:600; margin-bottom:1rem;">
+            <span style="width:5px; height:5px; background:#0FFFC1; border-radius:50%; display:inline-block; animation:blink 1.5s infinite;"></span>
+            Your Personal Anime Database
+        </div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; color:#ffffff; line-height:1; margin-bottom:0.75rem; letter-spacing:-0.5px;">
+            Otaku<span style="color:#0FFFC1; text-shadow:0 0 30px rgba(15,255,193,0.5);">Dex</span>
+        </h1>
+        <p style="color:#4A4D6A; font-size:0.85rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:1.5rem;">Track · Rate · Discover</p>
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <a asp-action="Create"
+               style="background:linear-gradient(135deg,#7B61FF,#5B41FF); color:#fff; padding:10px 24px; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.875rem; box-shadow:0 4px 14px rgba(123,97,255,0.4); display:inline-flex; align-items:center; gap:6px;"
+               onmouseover="this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.transform='translateY(0)'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                Add Anime
+            </a>
+            <a href="#collection"
+               style="background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.25); color:#0FFFC1; padding:10px 24px; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.875rem; display:inline-flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" /><line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" /><line x1="3" y1="18" x2="3.01" y2="18" /></svg>
+                View Collection
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5" id="collection">
+
+    <!-- Stats Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-2">
+            <div class="stat-card">
+                <div class="stat-number">@ViewData["TotalCount"]</div>
+                <div class="stat-label">Total</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="stat-card" style="border-top-color:#A08BFF;">
+                <div class="stat-number" style="color:#A08BFF;">@ViewData["WatchingCount"]</div>
+                <div class="stat-label">Watching</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="stat-card">
+                <div class="stat-number">@ViewData["CompletedCount"]</div>
+                <div class="stat-label">Completed</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="stat-card" style="border-top-color:#7B61FF;">
+                <div class="stat-number" style="color:#7B61FF;">@ViewData["PlanCount"]</div>
+                <div class="stat-label">Plan to Watch</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="stat-card" style="border-top-color:#FF2D78;">
+                <div class="stat-number" style="color:#FF2D78;">@ViewData["DroppedCount"]</div>
+                <div class="stat-label">Dropped</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2">
+            <div class="stat-card" style="border-top-color:#FFD166;">
+                <div class="stat-number" style="color:#FFD166;">@ViewData["AvgRating"]</div>
+                <div class="stat-label">Avg Rating</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search / Filter / Sort Bar -->
+    <div class="dex-card mb-4 py-3 px-4">
+        <form method="get" asp-action="Index">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label" style="display:flex; align-items:center; gap:6px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                        Search
+                    </label>
+                    <input type="text" name="searchString" value="@ViewData["CurrentSearch"]"
+                           class="form-control form-control-sm" placeholder="Title, genre, or studio..." />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" style="display:flex; align-items:center; gap:6px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /></svg>
+                        Status
+                    </label>
+                    <select name="statusFilter" class="form-select form-select-sm">
+                        <option value="">All Statuses</option>
+                        @foreach (var s in new[] { "Watching", "Completed", "Plan to Watch", "On Hold", "Dropped" })
+                        {
+                            <option value="@s" selected="@(ViewData["CurrentStatus"]?.ToString() == s ? "selected" : null)">@s</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" style="display:flex; align-items:center; gap:6px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" /></svg>
+                        Sort By
+                    </label>
+                    <select name="sortOrder" class="form-select form-select-sm">
+                        <option value="">Newest First</option>
+                        <option value="title_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "title_asc" ? "selected" : null)">Title A→Z</option>
+                        <option value="title_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "title_desc" ? "selected" : null)">Title Z→A</option>
+                        <option value="rating_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "rating_desc" ? "selected" : null)">Rating High→Low</option>
+                        <option value="rating_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "rating_asc" ? "selected" : null)">Rating Low→High</option>
+                        <option value="year_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "year_desc" ? "selected" : null)">Year Newest</option>
+                        <option value="year_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "year_asc" ? "selected" : null)">Year Oldest</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">Apply</button>
+                    <a asp-action="Index" class="btn btn-secondary btn-sm w-100">Reset</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Results count + Add button -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span style="color:#4A4D6A; font-size:0.85rem; letter-spacing:1px; display:flex; align-items:center; gap:6px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
+            @Model.Count() result(s) found
+        </span>
+        <a asp-action="Create" class="btn btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+            Add Anime
+        </a>
+    </div>
+
+    <!-- Table -->
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center py-5">
+            <div style="display:flex; justify-content:center; margin-bottom:1rem;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(15,255,193,0.4)" stroke-width="1.5"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+            </div>
+            <div>No anime found. Try a different search or <strong>add a new one!</strong></div>
+        </div>
+    }
+    else
+    {
+        <div class="dex-card p-0 overflow-hidden">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Cover</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Studio</th>
+                        <th>Year</th>
+                        <th>Episodes</th>
+                        <th>Status</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="width:60px;">
+                                @if (!string.IsNullOrEmpty(item.CoverImageUrl))
+                                {
+                                    <img src="@item.CoverImageUrl" alt="@item.Title"
+                                         style="width:45px; height:60px; object-fit:cover; border-radius:6px; border:1px solid rgba(15,255,193,0.2);" />
+                                }
+                                else
+                                {
+                                    <div style="width:45px; height:60px; background:rgba(123,97,255,0.1); border-radius:6px; border:1px solid rgba(123,97,255,0.2); display:flex; align-items:center; justify-content:center;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(123,97,255,0.5)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
+                                    </div>
+                                }
+                            </td>
+                            <td class="fw-bold" style="color:#F0F0FF;">@item.Title</td>
+                            <td style="color:#8B8FA8; font-size:0.85rem;">@(item.Genre ?? "—")</td>
+                            <td style="color:#8B8FA8; font-size:0.85rem;">@(item.Studio ?? "—")</td>
+                            <td style="color:#8B8FA8; font-size:0.85rem;">@(item.Year?.ToString() ?? "—")</td>
+                            <td style="color:#8B8FA8; font-size:0.85rem;">@(item.Episodes?.ToString() ?? "—")</td>
+                            <td>
+                                @{
+                                    var badgeClass = item.Status switch
+                                    {
+                                        "Watching" => "badge-watching",
+                                        "Completed" => "badge-completed",
+                                        "Dropped" => "badge-dropped",
+                                        "On Hold" => "badge-onhold",
+                                        _ => "badge-plan"
+                                    };
+                                }
+                                <span class="dex-badge @badgeClass">@item.Status</span>
+                            </td>
+                            <td>
+                                @if (item.Rating.HasValue)
+                                {
+                                    <span style="color:#FFD166; font-weight:600; display:flex; align-items:center; gap:4px;">
+                                        <svg width="11" height="11" viewBox="0 0 24 24" fill="#FFD166" stroke="#FFD166" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                                        @item.Rating<span style="color:#4A4D6A;">/10</span>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="color:#4A4D6A;">—</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,423 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- ── HERO ── -->
+<div style="position:relative; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+
+    <div id="posterBg" style="position:absolute; inset:0; display:grid; grid-template-columns:repeat(7,1fr); grid-template-rows:repeat(3,1fr); gap:4px; opacity:0.18; transform:scale(1.05);">
+        @{
+            var posters = new[] {
+                "/images/anime/aot.jpg", "/images/anime/fmab.jpg", "/images/anime/jjk.jpg",
+                "/images/anime/vinland.jpg", "/images/anime/spyfamily.jpg", "/images/anime/haikyuu.jpg",
+                "/images/anime/yourlie.jpg", "/images/anime/demonslayer.jpg", "/images/anime/aot.jpg",
+                "/images/anime/fmab.jpg", "/images/anime/jjk.jpg", "/images/anime/vinland.jpg",
+                "/images/anime/spyfamily.jpg", "/images/anime/haikyuu.jpg", "/images/anime/yourlie.jpg",
+                "/images/anime/demonslayer.jpg", "/images/anime/aot.jpg", "/images/anime/fmab.jpg",
+                "/images/anime/jjk.jpg", "/images/anime/vinland.jpg", "/images/anime/spyfamily.jpg",
+            };
+        }
+        @foreach (var poster in posters)
+        {
+            <img src="@poster" style="width:100%; height:100%; object-fit:cover;" />
+        }
+    </div>
+
+    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,9,14,0.92) 0%, rgba(8,9,14,0.75) 50%, rgba(8,9,14,0.92) 100%);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,9,14,0.3) 0%, rgba(8,9,14,0.0) 40%, rgba(8,9,14,0.0) 60%, rgba(8,9,14,1) 100%);"></div>
+    <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(15,255,193,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(15,255,193,0.02) 1px, transparent 1px); background-size:50px 50px;"></div>
+    <div style="position:absolute; top:20%; left:15%; width:500px; height:500px; background:rgba(123,97,255,0.08); border-radius:50%; filter:blur(120px);"></div>
+    <div style="position:absolute; bottom:25%; right:15%; width:400px; height:400px; background:rgba(15,255,193,0.05); border-radius:50%; filter:blur(100px);"></div>
+
+    <div style="position:relative; z-index:1; text-align:center; max-width:780px; padding:0 20px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.2); border-radius:20px; padding:6px 18px; font-size:0.72rem; letter-spacing:3px; color:#0FFFC1; text-transform:uppercase; font-weight:600; margin-bottom:1.5rem;">
+            <span style="width:6px; height:6px; background:#0FFFC1; border-radius:50%; display:inline-block; animation:blink 1.5s infinite;"></span>
+            Your Personal Anime Database
+        </div>
+
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-size:5.5rem; font-weight:700; color:#ffffff; line-height:0.95; margin-bottom:1.25rem; letter-spacing:-1px;">
+            Otaku<span style="color:#0FFFC1; text-shadow:0 0 40px rgba(15,255,193,0.6);">Dex</span>
+        </h1>
+
+        <p style="color:#8B8FA8; font-size:1.1rem; line-height:1.8; margin-bottom:2.5rem; max-width:520px; margin-left:auto; margin-right:auto;">
+            The ultimate anime tracking platform. Catalog every series, rate your favorites, and never lose track of your watchlist again.
+        </p>
+
+        <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:3rem;">
+            <a asp-controller="Anime" asp-action="Index"
+               style="background:linear-gradient(135deg,#7B61FF,#5B41FF); color:#fff; padding:15px 36px; border-radius:12px; text-decoration:none; font-weight:700; font-size:1rem; box-shadow:0 4px 24px rgba(123,97,255,0.5); letter-spacing:0.5px; display:inline-flex; align-items:center; gap:8px;"
+               onmouseover="this.style.boxShadow='0 8px 32px rgba(123,97,255,0.7)'; this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.boxShadow='0 4px 24px rgba(123,97,255,0.5)'; this.style.transform='translateY(0)'">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
+                Browse Collection
+            </a>
+            <a asp-controller="Anime" asp-action="Create"
+               style="background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.3); color:#0FFFC1; padding:15px 36px; border-radius:12px; text-decoration:none; font-weight:700; font-size:1rem; letter-spacing:0.5px; display:inline-flex; align-items:center; gap:8px;"
+               onmouseover="this.style.background='rgba(15,255,193,0.15)'; this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='rgba(15,255,193,0.08)'; this.style.transform='translateY(0)'">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                Add Anime
+            </a>
+        </div>
+
+        <div style="display:inline-flex; gap:32px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:16px 32px;">
+            <div style="text-align:center;">
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; color:#0FFFC1;">500+</div>
+                <div style="font-size:0.7rem; color:#4A4D6A; letter-spacing:1px; text-transform:uppercase; margin-top:2px;">Anime Tracked</div>
+            </div>
+            <div style="width:1px; background:rgba(255,255,255,0.06);"></div>
+            <div style="text-align:center;">
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; color:#A08BFF;">5</div>
+                <div style="font-size:0.7rem; color:#4A4D6A; letter-spacing:1px; text-transform:uppercase; margin-top:2px;">Status Types</div>
+            </div>
+            <div style="width:1px; background:rgba(255,255,255,0.06);"></div>
+            <div style="text-align:center;">
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; color:#FFD166;">10</div>
+                <div style="font-size:0.7rem; color:#4A4D6A; letter-spacing:1px; text-transform:uppercase; margin-top:2px;">Rating Scale</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); color:#4A4D6A; font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; animation:bounce 2s infinite; display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <span>scroll</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" /></svg>
+    </div>
+</div>
+
+<!-- ── FEATURED ANIMES ── -->
+<div style="background:#0E0F1A; border-top:1px solid rgba(255,255,255,0.06); padding:80px 0;">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#0FFFC1; font-weight:600; margin-bottom:8px;">Featured Watchlist</div>
+                <h2 style="font-family:'Space Grotesk',sans-serif; font-size:2rem; color:#F0F0FF; margin:0; display:flex; align-items:center; gap:10px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD166" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                    Must-Watch Anime
+                </h2>
+            </div>
+            <a asp-controller="Anime" asp-action="Create" style="color:#4A4D6A; font-size:0.8rem; text-decoration:none; letter-spacing:1px; display:flex; align-items:center; gap:6px;"
+               onmouseover="this.style.color='#0FFFC1'" onmouseout="this.style.color='#4A4D6A'">
+                Add to your list
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            </a>
+        </div>
+
+        <div class="row g-3">
+            @{
+                var mustWatch = new[] {
+                    new { Title="Attack on Titan", Genre="Action · Drama", Score="9.0", Episodes="87", Status="Completed", Image="/images/anime/aot.jpg" },
+                    new { Title="Fullmetal Alchemist: Brotherhood", Genre="Action · Fantasy", Score="9.1", Episodes="64", Status="Completed", Image="/images/anime/fmab.jpg" },
+                    new { Title="Demon Slayer", Genre="Action · Supernatural", Score="8.7", Episodes="26", Status="Completed", Image="/images/anime/demonslayer.jpg" },
+                    new { Title="Jujutsu Kaisen", Genre="Action · School", Score="8.7", Episodes="24", Status="Watching", Image="/images/anime/jjk.jpg" },
+                    new { Title="Vinland Saga", Genre="Historical · Action", Score="8.7", Episodes="24", Status="Completed", Image="/images/anime/vinland.jpg" },
+                    new { Title="Spy x Family", Genre="Comedy · Action", Score="8.5", Episodes="25", Status="Watching", Image="/images/anime/spyfamily.jpg" },
+                    new { Title="Haikyuu!!", Genre="Sports · Drama", Score="8.7", Episodes="25", Status="Completed", Image="/images/anime/haikyuu.jpg" },
+                    new { Title="Your Lie in April", Genre="Romance · Music", Score="8.7", Episodes="22", Status="Completed", Image="/images/anime/yourlie.jpg" },
+                };
+            }
+            @foreach (var anime in mustWatch)
+            {
+                <div class="col-6 col-md-3">
+                    <div style="background:#12131F; border:1px solid rgba(255,255,255,0.06); border-radius:14px; overflow:hidden; transition:all 0.3s ease; cursor:pointer;"
+                         onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.5)'; this.style.borderColor='rgba(15,255,193,0.2)'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(255,255,255,0.06)'">
+                        <div style="position:relative; aspect-ratio:2/3; overflow:hidden;">
+                            <img src="@anime.Image" alt="@anime.Title"
+                                 style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;"
+                                 onmouseover="this.style.transform='scale(1.06)'"
+                                 onmouseout="this.style.transform='scale(1)'" />
+                            <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(8,9,14,0.95) 0%, rgba(8,9,14,0.3) 50%, transparent 100%);"></div>
+                            <div style="position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); border:1px solid rgba(255,209,102,0.3); border-radius:8px; padding:4px 10px; font-size:0.75rem; font-weight:700; color:#FFD166; display:flex; align-items:center; gap:4px;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="#FFD166" stroke="#FFD166" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                                @anime.Score
+                            </div>
+                            <div style="position:absolute; top:10px; left:10px;">
+                                @if (anime.Status == "Watching")
+                                {
+                                    <span class="dex-badge badge-watching" style="font-size:0.6rem;">▶ Watching</span>
+                                }
+                                else
+                                {
+                                    <span class="dex-badge badge-completed" style="font-size:0.6rem;">✓ Done</span>
+                                }
+                            </div>
+                        </div>
+                        <div style="padding:14px;">
+                            <div style="font-family:'Space Grotesk',sans-serif; font-size:0.9rem; font-weight:700; color:#F0F0FF; margin-bottom:4px; line-height:1.3;">@anime.Title</div>
+                            <div style="font-size:0.72rem; color:#4A4D6A; margin-bottom:8px;">@anime.Genre</div>
+                            <div style="display:flex; align-items:center; justify-content:space-between;">
+                                <span style="font-size:0.7rem; color:#4A4D6A; display:flex; align-items:center; gap:4px;">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" /><polyline points="17 2 12 7 7 2" /></svg>
+                                    @anime.Episodes eps
+                                </span>
+                                <a asp-controller="Anime" asp-action="Create"
+                                   style="font-size:0.7rem; color:#0FFFC1; text-decoration:none; background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.2); padding:3px 10px; border-radius:6px; display:flex; align-items:center; gap:4px;"
+                                   onmouseover="this.style.background='rgba(15,255,193,0.15)'"
+                                   onmouseout="this.style.background='rgba(15,255,193,0.08)'">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                                    Add
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- ── CORE FEATURES ── -->
+<div style="padding:80px 0; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:800px; height:400px; background:rgba(123,97,255,0.04); border-radius:50%; filter:blur(100px);"></div>
+    <div class="container" style="position:relative; z-index:1;">
+
+        <div class="text-center mb-5">
+            <div style="font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:#7B61FF; font-weight:600; margin-bottom:8px;">Core Features</div>
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-size:2.2rem; color:#F0F0FF;">Everything you need</h2>
+            <p style="color:#4A4D6A; font-size:0.85rem; margin-top:8px;">to manage your anime journey</p>
+        </div>
+
+        <!-- Feature 01 -->
+        <div class="row g-4 align-items-center mb-5">
+            <div class="col-md-6">
+                <div style="position:relative; border-radius:16px; overflow:hidden; aspect-ratio:16/10;">
+                    <img src="/images/anime/onepiece.jpg" style="width:100%; height:100%; object-fit:cover; filter:brightness(0.6);" />
+                    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,9,14,0.3), rgba(123,97,255,0.2));"></div>
+                    <div style="position:absolute; bottom:20px; left:20px; right:20px;">
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <span class="dex-badge badge-watching">▶ Watching</span>
+                            <span class="dex-badge badge-completed">✓ Completed</span>
+                            <span class="dex-badge badge-onhold">⏸ On Hold</span>
+                            <span class="dex-badge badge-dropped">✕ Dropped</span>
+                            <span class="dex-badge badge-plan">○ Plan to Watch</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 ps-md-5">
+                <div style="font-size:0.7rem; letter-spacing:2px; color:#4A4D6A; font-weight:600; margin-bottom:12px;">01 — TRACK</div>
+                <h3 style="font-family:'Space Grotesk',sans-serif; font-size:1.8rem; color:#F0F0FF; margin-bottom:1rem;">Track every anime you've watched</h3>
+                <p style="color:#4A4D6A; line-height:1.8; margin-bottom:1.5rem;">Keep a complete record with 5 status types — Watching, Completed, On Hold, Dropped, and Plan to Watch. Never lose track of where you left off.</p>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    @foreach (var f in new[] { "5 watch status categories", "Add studio, genre, episode count", "Set year released per anime" })
+                    {
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:20px; height:20px; background:rgba(123,97,255,0.15); border:1px solid rgba(123,97,255,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7B61FF" stroke-width="3"><polyline points="20 6 9 17 4 12" /></svg>
+                            </div>
+                            <span style="color:#8B8FA8; font-size:0.875rem;">@f</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 02 -->
+        <div class="row g-4 align-items-center mb-5">
+            <div class="col-md-6 order-md-2">
+                <div style="position:relative; border-radius:16px; overflow:hidden; aspect-ratio:16/10;">
+                    <img src="/images/anime/naruto.jpg" style="width:100%; height:100%; object-fit:cover; filter:brightness(0.6);" />
+                    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,9,14,0.3), rgba(255,209,102,0.1));"></div>
+                    <div style="position:absolute; bottom:20px; left:20px; right:20px;">
+                        <div style="background:rgba(0,0,0,0.6); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:14px 16px;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                                <span style="color:#F0F0FF; font-size:0.8rem; font-weight:600;">Naruto</span>
+                                <span style="color:#FFD166; font-size:0.85rem; font-weight:700; display:flex; align-items:center; gap:4px;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#FFD166" stroke="#FFD166" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                                    9/10
+                                </span>
+                            </div>
+                            <div style="display:flex; gap:3px;">
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    <div style="flex:1; height:4px; border-radius:2px; background:@(i <= 9 ? "rgba(255,209,102,0.7)" : "rgba(255,255,255,0.08)");"></div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 order-md-1 pe-md-5">
+                <div style="font-size:0.7rem; letter-spacing:2px; color:#4A4D6A; font-weight:600; margin-bottom:12px;">02 — RATE</div>
+                <h3 style="font-family:'Space Grotesk',sans-serif; font-size:1.8rem; color:#F0F0FF; margin-bottom:1rem;">Rate and review your collection</h3>
+                <p style="color:#4A4D6A; line-height:1.8; margin-bottom:1.5rem;">Give each anime a personal score from 1 to 10, write notes about your experience, and track your average rating across your entire collection.</p>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    @foreach (var f in new[] { "1–10 rating scale per anime", "Personal notes and synopsis", "Average rating dashboard stat" })
+                    {
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:20px; height:20px; background:rgba(255,209,102,0.1); border:1px solid rgba(255,209,102,0.25); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFD166" stroke-width="3"><polyline points="20 6 9 17 4 12" /></svg>
+                            </div>
+                            <span style="color:#8B8FA8; font-size:0.875rem;">@f</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 03 -->
+        <div class="row g-4 align-items-center">
+            <div class="col-md-6">
+                <div style="position:relative; border-radius:16px; overflow:hidden; aspect-ratio:16/10;">
+                    <img src="/images/anime/myhero.jpg" style="width:100%; height:100%; object-fit:cover; filter:brightness(0.6);" />
+                    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,9,14,0.3), rgba(15,255,193,0.08));"></div>
+                    <div style="position:absolute; bottom:20px; left:20px; right:20px;">
+                        <div style="background:rgba(0,0,0,0.6); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px; display:flex; align-items:center; gap:10px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                            <span style="color:#4A4D6A; font-size:0.82rem;">Search "My Hero Academia"...</span>
+                            <span class="dex-badge badge-watching" style="margin-left:auto; font-size:0.6rem;">Watching</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 ps-md-5">
+                <div style="font-size:0.7rem; letter-spacing:2px; color:#4A4D6A; font-weight:600; margin-bottom:12px;">03 — DISCOVER</div>
+                <h3 style="font-family:'Space Grotesk',sans-serif; font-size:1.8rem; color:#F0F0FF; margin-bottom:1rem;">Search, filter, and sort instantly</h3>
+                <p style="color:#4A4D6A; line-height:1.8; margin-bottom:1.5rem;">Find any anime in seconds. Search by title, genre, or studio. Filter by watch status. Sort by rating, title, or year released.</p>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    @foreach (var f in new[] { "Search by title, genre, studio", "Filter by any watch status", "Sort by rating, title, or year" })
+                    {
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:20px; height:20px; background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0FFFC1" stroke-width="3"><polyline points="20 6 9 17 4 12" /></svg>
+                            </div>
+                            <span style="color:#8B8FA8; font-size:0.875rem;">@f</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ── STATS SHOWCASE ── -->
+<div style="background:#0E0F1A; border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06); padding:80px 0;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div style="font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:#0FFFC1; font-weight:600; margin-bottom:8px;">By The Numbers</div>
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-size:2rem; color:#F0F0FF;">Built for serious otakus</h2>
+        </div>
+
+        <div class="row g-4 text-center">
+            @foreach (var stat in new[] {
+                new { Number="9", Label="Fields per anime entry", Sub="Title, genre, studio, year, episodes, status, rating, synopsis, notes", Color="#0FFFC1" },
+                new { Number="5", Label="Watch status types", Sub="Watching, Completed, On Hold, Dropped, Plan to Watch", Color="#A08BFF" },
+                new { Number="10", Label="Point rating scale", Sub="Give each anime a personal score from 1 to 10", Color="#FFD166" },
+                new { Number="∞", Label="Anime you can track", Sub="No limits on your collection size", Color="#FF2D78" },
+            })
+            {
+                <div class="col-6 col-md-3">
+                    <div class="dex-card h-100" style="border-top-color:@stat.Color;">
+                        <div style="font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; color:@stat.Color; line-height:1; margin-bottom:8px;">@stat.Number</div>
+                        <div style="color:#F0F0FF; font-weight:600; font-size:0.9rem; margin-bottom:8px;">@stat.Label</div>
+                        <div style="color:#4A4D6A; font-size:0.78rem; line-height:1.6;">@stat.Sub</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- ── ANIME QUOTES ── -->
+<div style="padding:80px 0; position:relative; overflow:hidden;">
+    <div id="quoteSectionBg" style="position:absolute; inset:0; background-size:cover; background-position:center; opacity:0.12; transition:all 0.6s ease; filter:blur(6px);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,9,14,0.88), rgba(123,97,255,0.08));"></div>
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:300px; background:rgba(123,97,255,0.05); border-radius:50%; filter:blur(80px);"></div>
+
+    <div class="container" style="position:relative; z-index:1; max-width:800px;">
+
+        <div class="text-center mb-5">
+            <div style="font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:#7B61FF; font-weight:600; margin-bottom:8px;">Anime Wisdom</div>
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-size:2rem; color:#F0F0FF;">Words that hit different</h2>
+        </div>
+
+        <div id="quoteCard" class="dex-card text-center" style="border-top-color:rgba(123,97,255,0.5); padding:3rem; position:relative; overflow:hidden; min-height:220px;">
+            <div id="quoteBg" style="position:absolute; inset:0; background-size:cover; background-position:center; opacity:0.1; transition:all 0.6s ease; filter:blur(4px);"></div>
+            <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,9,14,0.8), rgba(123,97,255,0.15));"></div>
+            <div style="position:relative; z-index:1;">
+                <div style="display:flex; justify-content:center; margin-bottom:1rem;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="rgba(123,97,255,0.35)" stroke="none"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" /><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" /></svg>
+                </div>
+                <p id="quoteText" style="font-family:'Space Grotesk',sans-serif; font-size:1.2rem; color:#F0F0FF; line-height:1.7; margin-bottom:1.5rem; font-style:italic;"></p>
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <div style="width:24px; height:1px; background:rgba(123,97,255,0.4);"></div>
+                    <div id="quoteAuthor" style="color:#7B61FF; font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; font-weight:600;"></div>
+                    <div style="width:24px; height:1px; background:rgba(123,97,255,0.4);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:8px; margin-top:1.5rem;" id="quoteDots"></div>
+
+    </div>
+</div>
+
+<!-- ── CTA ── -->
+<div style="background:#0E0F1A; border-top:1px solid rgba(255,255,255,0.06); padding:80px 0; text-align:center; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; background:rgba(123,97,255,0.06); border-radius:50%; filter:blur(80px);"></div>
+    <div class="container" style="position:relative; z-index:1;">
+        <div style="font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:#0FFFC1; font-weight:600; margin-bottom:1rem;">Get Started</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:2.5rem; color:#F0F0FF; margin-bottom:1rem;">Start your collection today</h2>
+        <p style="color:#4A4D6A; margin-bottom:2.5rem; font-size:0.95rem; max-width:400px; margin-left:auto; margin-right:auto;">Add your first anime and begin tracking your journey.</p>
+        <a asp-controller="Anime" asp-action="Create"
+           style="background:linear-gradient(135deg,#7B61FF,#5B41FF); color:#fff; padding:16px 48px; border-radius:12px; text-decoration:none; font-weight:700; font-size:1rem; box-shadow:0 4px 24px rgba(123,97,255,0.5); display:inline-flex; align-items:center; gap:10px;"
+           onmouseover="this.style.boxShadow='0 8px 32px rgba(123,97,255,0.7)'; this.style.transform='translateY(-2px)'"
+           onmouseout="this.style.boxShadow='0 4px 24px rgba(123,97,255,0.5)'; this.style.transform='translateY(0)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+            Add Your First Anime
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.addEventListener('scroll', () => {
+            const bg = document.getElementById('posterBg');
+            if (bg) bg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.1}px)`;
+        });
+
+        const quotes = [
+            { text: "A dropout will beat a genius through hard work.", author: "Rock Lee — Naruto", bg: "/images/anime/aot.jpg" },
+            { text: "People's lives don't end when they die. It ends when they lose faith.", author: "Itachi Uchiha — Naruto", bg: "/images/anime/jjk.jpg" },
+            { text: "The world isn't perfect. But it's there for us, doing the best it can.", author: "Roy Mustang — FMA: Brotherhood", bg: "/images/anime/fmab.jpg" },
+            { text: "If you don't take risks, you can't create a future.", author: "Monkey D. Luffy — One Piece", bg: "/images/anime/vinland.jpg" },
+            { text: "Whatever you lose, you'll find it again. But what you throw away you'll never get back.", author: "Himura Kenshin — Rurouni Kenshin", bg: "/images/anime/haikyuu.jpg" },
+            { text: "The only thing we're allowed to do is believe that we won't regret the choice we made.", author: "Levi Ackerman — Attack on Titan", bg: "/images/anime/demonslayer.jpg" },
+        ];
+
+        let current = 0;
+
+        function renderDots() {
+            const dots = document.getElementById('quoteDots');
+            dots.innerHTML = '';
+            quotes.forEach((_, i) => {
+                const d = document.createElement('div');
+                d.style.cssText = `width:${i===current?'24px':'8px'}; height:8px; border-radius:4px; background:${i===current?'#7B61FF':'rgba(255,255,255,0.1)'}; transition:all 0.3s ease; cursor:pointer;`;
+                d.onclick = () => { current = i; showQuote(); };
+                dots.appendChild(d);
+            });
+        }
+
+        function showQuote() {
+            const card = document.getElementById('quoteCard');
+            const bg = document.getElementById('quoteBg');
+            const sectionBg = document.getElementById('quoteSectionBg');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                document.getElementById('quoteText').textContent = quotes[current].text;
+                document.getElementById('quoteAuthor').textContent = quotes[current].author;
+                if (bg) bg.style.backgroundImage = `url('${quotes[current].bg}')`;
+                if (sectionBg) sectionBg.style.backgroundImage = `url('${quotes[current].bg}')`;
+                card.style.transition = 'all 0.4s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+                renderDots();
+            }, 300);
+        }
+
+        showQuote();
+        setInterval(() => { current = (current + 1) % quotes.length; showQuote(); }, 5000);
+    </script>
+}

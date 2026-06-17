@@ -1,0 +1,111 @@
+﻿@model OtakuDex.Models.Anime
+
+@{
+    ViewData["Title"] = "Add Anime";
+}
+
+<div class="container mt-4 mb-5" style="max-width:680px;">
+
+    <div class="text-center mb-4">
+        <h2 style="font-family:'Space Grotesk',sans-serif; color:#F0F0FF; letter-spacing:2px;">Add to OtakuDex</h2>
+        <p style="color:#4A4D6A; font-size:0.85rem; letter-spacing:1px;">Expand your collection</p>
+    </div>
+
+    <div class="dex-card">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <label asp-for="Title" class="form-label">Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Attack on Titan" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Genre" class="form-label">Genre</label>
+                    <input asp-for="Genre" class="form-control" placeholder="e.g. Action, Fantasy" />
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Studio" class="form-label">Studio</label>
+                    <input asp-for="Studio" class="form-control" placeholder="e.g. MAPPA, Ufotable" />
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Episodes" class="form-label">Episodes</label>
+                    <input asp-for="Episodes" class="form-control" placeholder="e.g. 24" />
+                    <span asp-validation-for="Episodes" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Year" class="form-label">Year Released</label>
+                    <input asp-for="Year" class="form-control" placeholder="e.g. 2023" />
+                    <span asp-validation-for="Year" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Rating" class="form-label">Your Rating (1–10)</label>
+                    <input asp-for="Rating" class="form-control" placeholder="e.g. 9" />
+                    <span asp-validation-for="Rating" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Status" class="form-label">Watch Status</label>
+                    <select asp-for="Status" class="form-select">
+                        <option value="Plan to Watch">📋 Plan to Watch</option>
+                        <option value="Watching">▶️ Watching</option>
+                        <option value="Completed">✅ Completed</option>
+                        <option value="On Hold">⏸️ On Hold</option>
+                        <option value="Dropped">❌ Dropped</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="CoverImageUrl" class="form-label">Cover Image URL</label>
+                    <input asp-for="CoverImageUrl" class="form-control" placeholder="https://..." />
+                    <div class="mt-2" id="coverPreview" style="display:none;">
+                        <img id="previewImg" src="" alt="Cover Preview"
+                             style="width:80px; height:110px; object-fit:cover; border-radius:8px; border:1px solid rgba(15,255,193,0.3);" />
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Synopsis" class="form-label">Synopsis</label>
+                    <textarea asp-for="Synopsis" class="form-control" rows="3" placeholder="Brief description of the anime..."></textarea>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Notes" class="form-label">Your Notes</label>
+                    <textarea asp-for="Notes" class="form-control" rows="2" placeholder="Your thoughts, favorite moments..."></textarea>
+                </div>
+
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-primary flex-grow-1">+ Add to OtakuDex</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('CoverImageUrl').addEventListener('input', function () {
+            const url = this.value.trim();
+            const preview = document.getElementById('coverPreview');
+            const img = document.getElementById('previewImg');
+            if (url) {
+                img.src = url;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@model OtakuDex.Models.Anime
+
+@{
+    ViewData["Title"] = "Delete Anime";
+}
+
+<div class="container mt-4 mb-5" style="max-width:580px;">
+
+    <div class="text-center mb-4">
+        <h2 style="font-family:'Space Grotesk',sans-serif; color:#FF2D78; letter-spacing:2px;">🗑️ Delete Anime</h2>
+        <p style="color:#4A4D6A; font-size:0.85rem; letter-spacing:1px;">This action cannot be undone</p>
+    </div>
+
+    <div class="alert alert-warning text-center mb-4">
+        Are you sure you want to remove <strong>@Model.Title</strong> from OtakuDex?
+    </div>
+
+    <div class="dex-card">
+        <div class="row g-3 align-items-center">
+
+            <!-- Cover -->
+            <div class="col-3 text-center">
+                @if (!string.IsNullOrEmpty(Model.CoverImageUrl))
+                {
+                    <img src="@Model.CoverImageUrl" alt="@Model.Title"
+                         style="width:70px; height:100px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,45,120,0.3);" />
+                }
+                else
+                {
+                    <div style="width:70px; height:100px; background:rgba(255,45,120,0.08); border-radius:8px; border:1px solid rgba(255,45,120,0.2); display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin:0 auto;">🎌</div>
+                }
+            </div>
+
+            <!-- Info -->
+            <div class="col-9">
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:700; color:#F0F0FF; margin-bottom:6px;">@Model.Title</div>
+
+                <div class="row g-2">
+                    <div class="col-6">
+                        <div style="color:#4A4D6A; font-size:0.7rem; letter-spacing:1px; text-transform:uppercase;">Genre</div>
+                        <div style="color:#8B8FA8; font-size:0.85rem;">@(Model.Genre ?? "—")</div>
+                    </div>
+                    <div class="col-6">
+                        <div style="color:#4A4D6A; font-size:0.7rem; letter-spacing:1px; text-transform:uppercase;">Studio</div>
+                        <div style="color:#8B8FA8; font-size:0.85rem;">@(Model.Studio ?? "—")</div>
+                    </div>
+                    <div class="col-6">
+                        <div style="color:#4A4D6A; font-size:0.7rem; letter-spacing:1px; text-transform:uppercase;">Status</div>
+                        <div style="color:#8B8FA8; font-size:0.85rem;">@Model.Status</div>
+                    </div>
+                    <div class="col-6">
+                        <div style="color:#4A4D6A; font-size:0.7rem; letter-spacing:1px; text-transform:uppercase;">Rating</div>
+                        <div style="color:#FFD166; font-size:0.85rem; font-weight:600;">
+                            @(Model.Rating.HasValue ? $"⭐ {Model.Rating}/10" : "—")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <form asp-action="Delete" class="mt-4">
+        <input type="hidden" asp-for="Id" />
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-danger flex-grow-1">🗑️ Yes, Delete</button>
+            <a asp-action="Index" class="btn btn-secondary flex-grow-1 text-center">← Keep It</a>
+        </div>
+    </form>
+
+</div>

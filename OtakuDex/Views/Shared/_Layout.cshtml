@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — OtakuDex</title>
+    <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OtakuDex.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="dex-nav">
+        <div class="container-fluid px-4 d-flex align-items-center justify-content-between" style="height:100%;">
+            <a class="dex-brand" asp-controller="Home" asp-action="Index">
+                ⬡ OtakuDex
+            </a>
+            <div class="d-flex align-items-center gap-2">
+                <a class="dex-nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="dex-nav-link" asp-controller="Anime" asp-action="Index">Collection</a>
+                <a class="dex-nav-link" asp-controller="Home" asp-action="Privacy">About</a>
+                <a asp-controller="Anime" asp-action="Create" class="dex-nav-btn">+ Add Anime</a>
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <footer class="dex-footer">
+        <div class="container text-center">
+            <div style="color:#4A4D6A; font-size:0.8rem; letter-spacing:1px;">
+                &copy; 2026 OtakuDex &nbsp;·&nbsp;
+                <a asp-controller="Home" asp-action="Privacy" style="color:#4A4D6A; text-decoration:none;">About & Privacy</a>
+                &nbsp;·&nbsp; Built by
+                <a href="https://github.com/glnncrl" target="_blank" style="color:#0FFFC1; text-decoration:none;">Glenn Carlo Pabayo</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
