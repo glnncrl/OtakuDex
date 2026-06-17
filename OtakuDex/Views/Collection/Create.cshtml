@@ -1,0 +1,36 @@
+﻿@model OtakuDex.Models.Collection
+
+@{
+    ViewData["Title"] = "New Collection";
+}
+
+<div class="container mt-4 mb-5" style="max-width:580px;">
+    <div class="text-center mb-4">
+        <h2 style="font-family:'Space Grotesk',sans-serif; color:#F0F0FF;">Create Collection</h2>
+        <p style="color:#4A4D6A; font-size:0.85rem;">Build your own curated anime list</p>
+    </div>
+    <div class="dex-card">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div class="mb-4">
+                <label asp-for="Name" class="form-label">Collection Name</label>
+                <input asp-for="Name" class="form-control" placeholder="e.g. Top 10 Action, Best Romance" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+            <div class="mb-4">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="What is this collection about?"></textarea>
+            </div>
+            <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-primary flex-grow-1">Create Collection</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

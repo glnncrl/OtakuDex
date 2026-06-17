@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OtakuDex.Models.Anime>
 
 @{
-    ViewData["Title"] = "Collection";
+    ViewData["Title"] = "Tracker";
 }
 
 <!-- Hero Banner -->
@@ -34,7 +34,7 @@
             Your Personal Anime Database
         </div>
         <h1 style="font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; color:#ffffff; line-height:1; margin-bottom:0.75rem; letter-spacing:-0.5px;">
-            Otaku<span style="color:#0FFFC1; text-shadow:0 0 30px rgba(15,255,193,0.5);">Dex</span>
+            Otaku<span style="color:#0FFFC1; text-shadow:0 0 30px rgba(15,255,193,0.5);">Dex</span> Tracker
         </h1>
         <p style="color:#4A4D6A; font-size:0.85rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:1.5rem;">Track · Rate · Discover</p>
         <div style="display:flex; gap:10px; justify-content:center;">
@@ -45,16 +45,16 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                 Add Anime
             </a>
-            <a href="#collection"
+            <a href="#tracker"
                style="background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.25); color:#0FFFC1; padding:10px 24px; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.875rem; display:inline-flex; align-items:center; gap:6px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" /><line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" /><line x1="3" y1="18" x2="3.01" y2="18" /></svg>
-                View Collection
+                View Tracker
             </a>
         </div>
     </div>
 </div>
 
-<div class="container mb-5" id="collection">
+<div class="container mb-5" id="tracker">
 
     <!-- Stats Row -->
     <div class="row g-3 mb-4">
@@ -163,7 +163,7 @@
             <div style="display:flex; justify-content:center; margin-bottom:1rem;">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(15,255,193,0.4)" stroke-width="1.5"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
             </div>
-            <div>No anime found. Try a different search or <strong>add a new one!</strong></div>
+            <div>No anime found in your tracker. Try a different search or <strong>add a new one!</strong></div>
         </div>
     }
     else

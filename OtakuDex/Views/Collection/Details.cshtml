@@ -1,0 +1,76 @@
+﻿@model OtakuDex.Models.Collection
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-4 mb-5">
+
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#0FFFC1; font-weight:600; margin-bottom:6px;">Collection</div>
+            <h2 style="font-family:'Space Grotesk',sans-serif; color:#F0F0FF; margin-bottom:4px;">@Model.Name</h2>
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <p style="color:#4A4D6A; font-size:0.9rem; margin:0;">@Model.Description</p>
+            }
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+            <a asp-action="AddAnime" asp-route-id="@Model.Id" class="btn btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                Add Anime
+            </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-sm">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary btn-sm">← Back</a>
+        </div>
+    </div>
+
+    @if (!Model.CollectionItems.Any())
+    {
+        <div class="dex-card text-center py-5">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(15,255,193,0.3)" stroke-width="1.5" style="margin-bottom:1rem;"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
+            <p style="color:#4A4D6A; margin:0;">No anime in this collection yet. Click <strong style="color:#0FFFC1;">Add Anime</strong> to get started!</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var item in Model.CollectionItems.OrderBy(ci => ci.DateAdded))
+            {
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div style="background:#12131F; border:1px solid rgba(255,255,255,0.06); border-radius:12px; overflow:hidden; transition:all 0.3s ease;"
+                         onmouseover="this.style.borderColor='rgba(255,45,120,0.25)'"
+                         onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
+                        <div style="position:relative; aspect-ratio:2/3; overflow:hidden;">
+                            @if (!string.IsNullOrEmpty(item.Anime?.CoverImageUrl))
+                            {
+                                <img src="@item.Anime.CoverImageUrl" alt="@item.Anime.Title"
+                                     style="width:100%; height:100%; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <div style="width:100%; height:100%; background:rgba(123,97,255,0.1); display:flex; align-items:center; justify-content:center;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(123,97,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
+                                </div>
+                            }
+                            <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(8,9,14,0.9) 0%, transparent 60%);"></div>
+                        </div>
+                        <div style="padding:10px;">
+                            <div style="font-family:'Space Grotesk',sans-serif; font-size:0.78rem; font-weight:700; color:#F0F0FF; margin-bottom:8px; line-height:1.3;">@item.Anime?.Title</div>
+                            <form asp-action="RemoveAnime" method="post">
+                                <input type="hidden" name="collectionId" value="@Model.Id" />
+                                <input type="hidden" name="animeId" value="@item.AnimeId" />
+                                @Html.AntiForgeryToken()
+                                <button type="submit" style="width:100%; background:rgba(255,45,120,0.1); border:1px solid rgba(255,45,120,0.2); color:#FF2D78; border-radius:6px; padding:4px; font-size:0.7rem; cursor:pointer;"
+                                        onmouseover="this.style.background='rgba(255,45,120,0.2)'"
+                                        onmouseout="this.style.background='rgba(255,45,120,0.1)'">
+                                    Remove
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

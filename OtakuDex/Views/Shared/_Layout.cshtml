@@ -14,7 +14,6 @@
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="dex-nav">
         <div class="container-fluid px-4 d-flex align-items-center justify-content-between" style="height:100%;">
             <a class="dex-brand" asp-controller="Home" asp-action="Index">
@@ -22,7 +21,8 @@
             </a>
             <div class="d-flex align-items-center gap-2">
                 <a class="dex-nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="dex-nav-link" asp-controller="Anime" asp-action="Index">Collection</a>
+                <a class="dex-nav-link" asp-controller="Anime" asp-action="Index">Tracker</a>
+                <a class="dex-nav-link" asp-controller="Collection" asp-action="Index">Collections</a>
                 <a class="dex-nav-link" asp-controller="Home" asp-action="Privacy">About</a>
                 <a asp-controller="Anime" asp-action="Create" class="dex-nav-btn">+ Add Anime</a>
             </div>
@@ -36,8 +36,6 @@
             <div style="color:#4A4D6A; font-size:0.8rem; letter-spacing:1px;">
                 &copy; 2026 OtakuDex &nbsp;·&nbsp;
                 <a asp-controller="Home" asp-action="Privacy" style="color:#4A4D6A; text-decoration:none;">About & Privacy</a>
-                &nbsp;·&nbsp; Built by
-                <a href="https://github.com/glnncrl" target="_blank" style="color:#0FFFC1; text-decoration:none;">Glenn Carlo Pabayo</a>
             </div>
         </div>
     </footer>

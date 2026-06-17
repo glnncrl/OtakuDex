@@ -60,7 +60,11 @@ namespace OtakuDex.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
-            var anime = await _context.Animes.FirstOrDefaultAsync(m => m.Id == id);
+            var anime = await _context.Animes
+                .Include(a => a.Reviews)
+                .Include(a => a.AnimeGenres)
+                    .ThenInclude(ag => ag.Genre)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (anime == null) return NotFound();
             return View(anime);
         }

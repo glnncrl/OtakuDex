@@ -1,0 +1,32 @@
+﻿@model OtakuDex.Models.Collection
+
+@{
+    ViewData["Title"] = "Delete Collection";
+}
+
+<div class="container mt-4 mb-5" style="max-width:500px;">
+    <div class="text-center mb-4">
+        <h2 style="font-family:'Space Grotesk',sans-serif; color:#FF2D78;">Delete Collection</h2>
+        <p style="color:#4A4D6A; font-size:0.85rem;">This action cannot be undone</p>
+    </div>
+    <div class="alert alert-warning text-center">
+        Are you sure you want to delete <strong>@Model.Name</strong>?
+        This will also remove all @Model.CollectionItems.Count anime from this collection.
+    </div>
+    <div class="dex-card mb-4">
+        <div style="color:#4A4D6A; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Collection Name</div>
+        <div style="color:#F0F0FF; font-weight:700; font-size:1rem; margin-bottom:12px;">@Model.Name</div>
+        @if (!string.IsNullOrEmpty(Model.Description))
+        {
+            <div style="color:#4A4D6A; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Description</div>
+            <div style="color:#8B8FA8; font-size:0.875rem;">@Model.Description</div>
+        }
+    </div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-danger flex-grow-1">Yes, Delete</button>
+            <a asp-action="Index" class="btn btn-secondary flex-grow-1 text-center">Cancel</a>
+        </div>
+    </form>
+</div>

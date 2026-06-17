@@ -46,5 +46,9 @@ namespace OtakuDex.Models
 
         [Display(Name = "Date Added")]
         public DateTime DateAdded { get; set; } = DateTime.Now;
+
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public ICollection<CollectionItem> CollectionItems { get; set; } = new List<CollectionItem>();
+        public ICollection<AnimeGenre> AnimeGenres { get; set; } = new List<AnimeGenre>();
     }
 }
