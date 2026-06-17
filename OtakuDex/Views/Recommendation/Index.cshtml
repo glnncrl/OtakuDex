@@ -1,0 +1,203 @@
+﻿@model IEnumerable<OtakuDex.Controllers.RecommendationViewModel>
+
+@{
+    ViewData["Title"] = "For You";
+    bool hasEnoughData = ViewBag.HasEnoughData ?? false;
+    var favoriteGenres = ViewBag.FavoriteGenres as IEnumerable<string>;
+    var favoriteStudios = ViewBag.FavoriteStudios as IEnumerable<string>;
+    int trackedCount = ViewBag.TrackedCount ?? 0;
+}
+
+<!-- Hero -->
+<div style="position:relative; height:280px; overflow:hidden; display:flex; align-items:center; justify-content:center; margin-bottom:2rem;">
+    <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(15,255,193,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(15,255,193,0.02) 1px, transparent 1px); background-size:40px 40px;"></div>
+    <div style="position:absolute; top:30%; left:15%; width:400px; height:400px; background:rgba(255,45,120,0.05); border-radius:50%; filter:blur(80px);"></div>
+    <div style="position:absolute; top:20%; right:15%; width:350px; height:350px; background:rgba(123,97,255,0.07); border-radius:50%; filter:blur(80px);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,9,14,0.2), rgba(8,9,14,0.95));"></div>
+    <div style="position:relative; z-index:1; text-align:center; padding:0 20px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,45,120,0.08); border:1px solid rgba(255,45,120,0.25); border-radius:20px; padding:5px 16px; font-size:0.68rem; letter-spacing:3px; color:#FF2D78; text-transform:uppercase; font-weight:600; margin-bottom:0.75rem;">
+            <span style="width:5px; height:5px; background:#FF2D78; border-radius:50%; display:inline-block; animation:blink 1.5s infinite;"></span>
+            Powered by your taste
+        </div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-size:2.8rem; font-weight:700; color:#ffffff; margin:0 0 0.5rem;">
+            Picked <span style="color:#FF2D78;">For You</span>
+        </h1>
+        <p style="color:#4A4D6A; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase;">Recommendations based on your tracker</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+
+    @if (!hasEnoughData)
+    {
+        <!-- Not enough data -->
+        <div class="dex-card text-center py-5 mb-4" style="border-top-color:#FF2D78;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,45,120,0.4)" stroke-width="1.5" style="margin-bottom:1rem;"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+            <h4 style="font-family:'Space Grotesk',sans-serif; color:#F0F0FF; margin-bottom:8px;">Not enough data yet</h4>
+            <p style="color:#4A4D6A; font-size:0.875rem; max-width:400px; margin:0 auto 1.5rem;">Rate at least <strong style="color:#FF2D78;">3 anime</strong> in your tracker to unlock personalized recommendations. You've rated <strong style="color:#0FFFC1;">@trackedCount</strong> so far.</p>
+            <a asp-controller="Anime" asp-action="Index" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
+                Go to Tracker
+            </a>
+        </div>
+    }
+    else
+    {
+        <!-- Taste Profile -->
+        <div class="dex-card mb-4" style="border-top-color:#FF2D78;">
+            <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                Your Taste Profile
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div style="color:#4A4D6A; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;">Top Genres</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                        @if (favoriteGenres != null && favoriteGenres.Any())
+                        {
+                            @foreach (var genre in favoriteGenres)
+                            {
+                                <span style="background:rgba(255,45,120,0.1); border:1px solid rgba(255,45,120,0.25); color:#FF2D78; border-radius:20px; padding:3px 12px; font-size:0.75rem; font-weight:600;">
+                                    @(char.ToUpper(genre[0]) + genre.Substring(1))
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span style="color:#4A4D6A; font-size:0.82rem;">Rate more anime to build your profile</span>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="color:#4A4D6A; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;">Favorite Studios</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                        @if (favoriteStudios != null && favoriteStudios.Any())
+                        {
+                            @foreach (var studio in favoriteStudios)
+                            {
+                                <span style="background:rgba(123,97,255,0.1); border:1px solid rgba(123,97,255,0.25); color:#A08BFF; border-radius:20px; padding:3px 12px; font-size:0.75rem; font-weight:600;">
+                                    @studio
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span style="color:#4A4D6A; font-size:0.82rem;">No studio preferences detected yet</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results count -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <span style="color:#4A4D6A; font-size:0.85rem;">Found <strong style="color:#F0F0FF;">@Model.Count()</strong> recommendations for you</span>
+            </div>
+            <div style="font-size:0.72rem; color:#4A4D6A; display:flex; align-items:center; gap:6px;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+                Based on @trackedCount tracked anime
+            </div>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="dex-card text-center py-5">
+                <p style="color:#4A4D6A; margin:0;">No recommendations found. Try adding and rating more anime in your tracker!</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var rec in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="dex-card h-100" style="transition:all 0.3s ease; position:relative; overflow:hidden;"
+                             onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,45,120,0.3)'"
+                             onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.06)'">
+
+                            <!-- Match Score Badge -->
+                            <div style="position:absolute; top:16px; right:16px; background:linear-gradient(135deg,#FF2D78,#A020F0); color:#fff; border-radius:20px; padding:4px 12px; font-size:0.72rem; font-weight:700; font-family:'Space Grotesk',sans-serif; letter-spacing:0.5px;">
+                                @rec.MatchScore% match
+                            </div>
+
+                            <div style="display:flex; gap:14px; margin-bottom:14px;">
+                                <!-- Cover -->
+                                <div style="flex-shrink:0;">
+                                    @if (!string.IsNullOrEmpty(rec.Anime.CoverImageUrl))
+                                    {
+                                        <img src="@rec.Anime.CoverImageUrl" alt="@rec.Anime.Title"
+                                             style="width:70px; height:100px; object-fit:cover; border-radius:10px; border:1px solid rgba(255,45,120,0.2);" />
+                                    }
+                                    else
+                                    {
+                                        <div style="width:70px; height:100px; background:rgba(255,45,120,0.08); border-radius:10px; border:1px solid rgba(255,45,120,0.2); display:flex; align-items:center; justify-content:center;">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,45,120,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
+                                        </div>
+                                    }
+                                </div>
+
+                                <!-- Info -->
+                                <div style="flex:1; min-width:0; padding-top:4px;">
+                                    <h5 style="font-family:'Space Grotesk',sans-serif; font-size:0.95rem; font-weight:700; color:#F0F0FF; margin-bottom:4px; line-height:1.3; padding-right:60px;">@rec.Anime.Title</h5>
+                                    <div style="color:#4A4D6A; font-size:0.72rem; margin-bottom:6px;">@rec.Anime.Studio · @rec.Anime.Year</div>
+                                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                                        <span style="color:#FFD166; font-size:0.78rem; font-weight:700; display:flex; align-items:center; gap:3px;">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="#FFD166" stroke="#FFD166" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                                            @rec.Anime.MalScore MAL
+                                        </span>
+                                        <span style="color:#4A4D6A; font-size:0.72rem;">@rec.Anime.Episodes eps</span>
+                                    </div>
+                                    <!-- Genre pills -->
+                                    <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                                        @foreach (var g in rec.Anime.Genre.Split(',').Take(3))
+                                        {
+                                            <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); color:#8B8FA8; border-radius:10px; padding:2px 8px; font-size:0.65rem;">@g.Trim()</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Synopsis -->
+                            <p style="color:#4A4D6A; font-size:0.78rem; line-height:1.6; margin-bottom:12px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                                @rec.Anime.Synopsis
+                            </p>
+
+                            <!-- Match Reasons -->
+                            <div style="background:rgba(255,45,120,0.05); border:1px solid rgba(255,45,120,0.12); border-radius:8px; padding:10px 12px; margin-bottom:12px;">
+                                <div style="font-size:0.65rem; letter-spacing:1px; text-transform:uppercase; color:#FF2D78; font-weight:600; margin-bottom:6px;">Why this?</div>
+                                @foreach (var reason in rec.MatchReasons.Take(2))
+                                {
+                                    <div style="display:flex; align-items:flex-start; gap:6px; margin-bottom:3px;">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FF2D78" stroke-width="3" style="flex-shrink:0; margin-top:2px;"><polyline points="20 6 9 17 4 12" /></svg>
+                                        <span style="color:#8B8FA8; font-size:0.75rem; line-height:1.4;">@reason</span>
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Match Score Bar -->
+                            <div style="margin-bottom:14px;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                    <span style="font-size:0.65rem; color:#4A4D6A; letter-spacing:1px; text-transform:uppercase;">Match Score</span>
+                                    <span style="font-size:0.7rem; color:#FF2D78; font-weight:700;">@rec.MatchScore%</span>
+                                </div>
+                                <div style="height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;">
+                                    <div style="height:100%; width:@rec.MatchScore%; background:linear-gradient(90deg,#FF2D78,#A020F0); border-radius:2px; transition:width 0.6s ease;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Add to Tracker button -->
+                            <a asp-controller="Anime" asp-action="Create"
+                               style="display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(255,45,120,0.08); border:1px solid rgba(255,45,120,0.25); color:#FF2D78; border-radius:8px; padding:8px; text-decoration:none; font-size:0.8rem; font-weight:600; transition:all 0.2s ease;"
+                               onmouseover="this.style.background='rgba(255,45,120,0.18)'"
+                               onmouseout="this.style.background='rgba(255,45,120,0.08)'">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                                Add to Tracker
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>

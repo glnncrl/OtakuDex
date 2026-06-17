@@ -1,0 +1,350 @@
+﻿@{
+    ViewData["Title"] = "Analytics";
+}
+
+<!-- Hero -->
+<div style="position:relative; height:220px; overflow:hidden; display:flex; align-items:center; justify-content:center; margin-bottom:2rem;">
+    <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(15,255,193,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(15,255,193,0.02) 1px, transparent 1px); background-size:40px 40px;"></div>
+    <div style="position:absolute; top:50%; left:20%; width:400px; height:400px; background:rgba(15,255,193,0.05); border-radius:50%; filter:blur(80px);"></div>
+    <div style="position:absolute; top:50%; right:20%; width:300px; height:300px; background:rgba(123,97,255,0.06); border-radius:50%; filter:blur(80px);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,9,14,0.2), rgba(8,9,14,0.95));"></div>
+    <div style="position:relative; z-index:1; text-align:center;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.2); border-radius:20px; padding:5px 16px; font-size:0.68rem; letter-spacing:3px; color:#0FFFC1; text-transform:uppercase; font-weight:600; margin-bottom:0.75rem;">
+            <span style="width:5px; height:5px; background:#0FFFC1; border-radius:50%; display:inline-block; animation:blink 1.5s infinite;"></span>
+            Data Insights
+        </div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-size:2.8rem; font-weight:700; color:#ffffff; margin:0;">
+            Analytics <span style="color:#0FFFC1;">Dashboard</span>
+        </h1>
+        <p style="color:#4A4D6A; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase; margin-top:8px;">Your tracker insights at a glance</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+
+    <!-- ── Key Stats ── -->
+    <div class="row g-3 mb-4">
+        @{
+            var stats = new[] {
+                new { Label="Total Anime", Value=ViewBag.TotalAnime.ToString(), Color="#0FFFC1", Icon="<path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/>" },
+                new { Label="Avg Rating", Value=ViewBag.AvgRating.ToString() + "/10", Color="#FFD166", Icon="<polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/>" },
+                new { Label="Completion Rate", Value=ViewBag.CompletionRate.ToString() + "%", Color="#A08BFF", Icon="<path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/><polyline points='22 4 12 14.01 9 11.01'/>" },
+                new { Label="Total Episodes", Value=ViewBag.TotalEpisodes.ToString(), Color="#FF2D78", Icon="<rect x='2' y='7' width='20' height='15' rx='2'/><polyline points='17 2 12 7 7 2'/>" },
+                new { Label="Total Reviews", Value=ViewBag.TotalReviews.ToString(), Color="#0FFFC1", Icon="<path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/>" },
+                new { Label="Collections", Value=ViewBag.TotalCollections.ToString(), Color="#FFD166", Icon="<path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'/>" },
+                new { Label="Genre Tags", Value=ViewBag.TotalGenres.ToString(), Color="#A08BFF", Icon="<path d='M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z'/><line x1='7' y1='7' x2='7.01' y2='7'/>" },
+            };
+        }
+        @foreach (var s in stats)
+        {
+            <div class="col-6 col-md-3">
+                <div class="dex-card" style="border-top-color:@s.Color;">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                        <div style="width:36px; height:36px; background:rgba(255,255,255,0.04); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="@s.Color" stroke-width="2">@Html.Raw(s.Icon)</svg>
+                        </div>
+                        <div style="font-size:0.7rem; color:#4A4D6A; letter-spacing:1px; text-transform:uppercase; font-weight:600;">@s.Label</div>
+                    </div>
+                    <div style="font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700; color:@s.Color; line-height:1;">@s.Value</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- ── Charts Row 1 ── -->
+    <div class="row g-4 mb-4">
+
+        <!-- Watch Status Donut -->
+        <div class="col-md-5">
+            <div class="dex-card h-100">
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                    Watch Status
+                </div>
+                <div style="position:relative; height:260px;">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rating Distribution -->
+        <div class="col-md-7">
+            <div class="dex-card h-100">
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                    Rating Distribution
+                </div>
+                <div style="position:relative; height:260px;">
+                    <canvas id="ratingChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Charts Row 2 ── -->
+    <div class="row g-4 mb-4">
+
+        <!-- Anime Added Over Time -->
+        <div class="col-md-7">
+            <div class="dex-card h-100">
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+                    Anime Added Over Time
+                </div>
+                <div style="position:relative; height:260px;">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Genres -->
+        <div class="col-md-5">
+            <div class="dex-card h-100">
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" /></svg>
+                    Top Genres
+                </div>
+                <div style="position:relative; height:260px;">
+                    <canvas id="genreChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Tables Row ── -->
+    <div class="row g-4">
+
+        <!-- Top Rated -->
+        <div class="col-md-4">
+            <div class="dex-card h-100">
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#FFD166" stroke="#FFD166" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                    Top Rated
+                </div>
+                @{
+                    var topRated = ViewBag.TopRated as IEnumerable<OtakuDex.Models.Anime>;
+                }
+                @if (topRated == null || !topRated.Any())
+                {
+                    <p style="color:#4A4D6A; font-size:0.82rem;">No ratings yet.</p>
+                }
+                else
+                {
+                    int rank = 1;
+                    @foreach (var anime in topRated)
+                    {
+                        <div style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <div style="font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:700; color:#4A4D6A; min-width:24px;">@rank</div>
+                            @if (!string.IsNullOrEmpty(anime.CoverImageUrl))
+                            {
+                                <img src="@anime.CoverImageUrl" style="width:36px; height:50px; object-fit:cover; border-radius:6px; flex-shrink:0;" />
+                            }
+                            <div style="flex:1; min-width:0;">
+                                <a asp-controller="Anime" asp-action="Details" asp-route-id="@anime.Id"
+                                   style="font-size:0.82rem; font-weight:600; color:#F0F0FF; text-decoration:none; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">@anime.Title</a>
+                                <span style="color:#FFD166; font-size:0.75rem; font-weight:700;">⭐ @anime.Rating/10</span>
+                            </div>
+                        </div>
+                        rank++;
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Most Reviewed -->
+        <div class="col-md-4">
+            <div class="dex-card h-100">
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                    Most Reviewed
+                </div>
+                @{
+                    var mostReviewed = ViewBag.MostReviewed as IEnumerable<OtakuDex.Models.Anime>;
+                }
+                @if (mostReviewed == null || !mostReviewed.Any())
+                {
+                    <p style="color:#4A4D6A; font-size:0.82rem;">No reviews yet.</p>
+                }
+                else
+                {
+                    @foreach (var anime in mostReviewed)
+                    {
+                        <div style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                            @if (!string.IsNullOrEmpty(anime.CoverImageUrl))
+                            {
+                                <img src="@anime.CoverImageUrl" style="width:36px; height:50px; object-fit:cover; border-radius:6px; flex-shrink:0;" />
+                            }
+                            <div style="flex:1; min-width:0;">
+                                <a asp-controller="Anime" asp-action="Details" asp-route-id="@anime.Id"
+                                   style="font-size:0.82rem; font-weight:600; color:#F0F0FF; text-decoration:none; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">@anime.Title</a>
+                                <span style="color:#0FFFC1; font-size:0.75rem;">@anime.Reviews.Count review(s)</span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Top Studios -->
+        <div class="col-md-4">
+            <div class="dex-card h-100">
+                <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" /></svg>
+                    Top Studios
+                </div>
+                @{
+                    var topStudios = ViewBag.TopStudios as IEnumerable<dynamic>;
+                }
+                @if (topStudios == null || !topStudios.Any())
+                {
+                    <p style="color:#4A4D6A; font-size:0.82rem;">No studio data yet.</p>
+                }
+                else
+                {
+                    @foreach (var studio in topStudios)
+                    {
+                        <div style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <span style="color:#F0F0FF; font-size:0.82rem; font-weight:600;">@studio.Studio</span>
+                                <span style="color:#A08BFF; font-size:0.75rem; font-weight:700;">@studio.Count anime</span>
+                            </div>
+                            <div style="height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;">
+                                <div style="height:100%; background:linear-gradient(90deg,#7B61FF,#A08BFF); border-radius:2px; width:@(studio.Count * 20)%;"></div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const isDark = true;
+        Chart.defaults.color = '#4A4D6A';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+        // ── Watch Status Donut ──
+        new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.StatusLabels as string[])),
+        datasets: [{
+        data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.StatusCounts as int[])),
+        backgroundColor: [
+        'rgba(160,139,255,0.8)',
+        'rgba(15,255,193,0.8)',
+        'rgba(123,97,255,0.8)',
+        'rgba(255,209,102,0.8)',
+        'rgba(255,45,120,0.8)',
+        ],
+        borderColor: '#12131F',
+        borderWidth: 3,
+        hoverOffset: 6
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+        legend: {
+        position: 'bottom',
+        labels: { padding: 16, font: { size: 11 }, color: '#8B8FA8' }
+        }
+        },
+        cutout: '65%'
+        }
+        });
+
+        // ── Rating Distribution ──
+        new Chart(document.getElementById('ratingChart'), {
+        type: 'bar',
+        data: {
+        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.RatingLabels as string[])),
+        datasets: [{
+        label: 'Anime',
+        data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.RatingCounts as int[])),
+        backgroundColor: (ctx) => {
+        const v = ctx.parsed.y;
+        if (v === 0) return 'rgba(255,255,255,0.05)';
+        return `rgba(15,255,193,${0.3 + (ctx.dataIndex / 10) * 0.6})`;
+        },
+        borderColor: 'rgba(15,255,193,0.5)',
+        borderWidth: 1,
+        borderRadius: 6,
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#4A4D6A' } },
+        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#4A4D6A', stepSize: 1 }, beginAtZero: true }
+        }
+        }
+        });
+
+        // ── Timeline ──
+        new Chart(document.getElementById('timelineChart'), {
+        type: 'line',
+        data: {
+        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthLabels as string[])),
+        datasets: [{
+        label: 'Anime Added',
+        data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthCounts as int[])),
+        borderColor: '#7B61FF',
+        backgroundColor: 'rgba(123,97,255,0.1)',
+        borderWidth: 2.5,
+        pointBackgroundColor: '#7B61FF',
+        pointBorderColor: '#12131F',
+        pointBorderWidth: 2,
+        pointRadius: 5,
+        fill: true,
+        tension: 0.4
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#4A4D6A', maxRotation: 45 } },
+        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#4A4D6A', stepSize: 1 }, beginAtZero: true }
+        }
+        }
+        });
+
+        // ── Genre Bar ──
+        new Chart(document.getElementById('genreChart'), {
+        type: 'bar',
+        data: {
+        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.GenreLabels as string[])),
+        datasets: [{
+        label: 'Anime',
+        data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.GenreCounts as int[])),
+        backgroundColor: 'rgba(255,209,102,0.7)',
+        borderColor: 'rgba(255,209,102,0.9)',
+        borderWidth: 1,
+        borderRadius: 6,
+        }]
+        },
+        options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#4A4D6A', stepSize: 1 }, beginAtZero: true },
+        y: { grid: { display: false }, ticks: { color: '#8B8FA8', font: { size: 11 } } }
+        }
+        }
+        });
+    </script>
+}

@@ -23,25 +23,52 @@
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" /></svg>
             Project Info
         </div>
-        <div class="row g-0">
-            @{
-                var info = new[] {
-                    ("Project Name", "OtakuDex"),
-                    ("Type", "Full Stack C# Web Application"),
-                    ("Course", "COMP 019 \u2014 Applications Development and Emerging Technologies"),
-                    ("School", "Polytechnic University of the Philippines \u2014 CCIS"),
-                    ("Framework", "ASP.NET Core MVC (.NET 10)"),
-                    ("Database", "SQL Server \u2014 OtakuDexDB"),
-                    ("ORM", "Entity Framework Core"),
-                    ("Frontend", "Razor Views, Bootstrap 5, Custom CSS"),
-                    ("Version Control", "Git & GitHub"),
-                };
-            }
-            @foreach (var row in info)
+        @foreach (var row in new[] {
+            ("Project Name", "OtakuDex"),
+            ("Type", "Full Stack C# Web Application"),
+            ("Course", "COMP 019 \u2014 Applications Development and Emerging Technologies"),
+            ("School", "Polytechnic University of the Philippines \u2014 CCIS"),
+            ("Framework", "ASP.NET Core MVC (.NET 10)"),
+            ("Database", "SQL Server \u2014 OtakuDexDB"),
+            ("ORM", "Entity Framework Core"),
+            ("Frontend", "Razor Views, Bootstrap 5, Custom CSS"),
+            ("Charts", "Chart.js (Analytics Dashboard)"),
+            ("Version Control", "Git & GitHub"),
+        })
+        {
+            <div style="display:flex; align-items:flex-start; gap:24px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                <div style="min-width:200px; color:#4A4D6A; font-size:0.75rem; font-weight:600; letter-spacing:0.5px; padding-top:2px;">@row.Item1</div>
+                <div style="color:#F0F0FF; font-size:0.9rem;">@row.Item2</div>
+            </div>
+        }
+    </div>
+
+    <!-- Features -->
+    <div class="dex-card mb-4">
+        <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1.5rem; display:flex; align-items:center; gap:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+            Key Features
+        </div>
+        <div class="row g-3">
+            @foreach (var feat in new[] {
+                new { Icon="<rect x='3' y='3' width='7' height='7'/><rect x='14' y='3' width='7' height='7'/><rect x='14' y='14' width='7' height='7'/><rect x='3' y='14' width='7' height='7'/>", Title="Anime Tracker", Desc="Full CRUD with 5 watch statuses, ratings, and 9 data fields", Color="#0FFFC1" },
+                new { Icon="<path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/>", Title="Reviews", Desc="Write and manage community reviews per anime with ratings", Color="#A08BFF" },
+                new { Icon="<path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'/>", Title="Collections", Desc="Build custom curated anime lists with cover poster grid", Color="#FFD166" },
+                new { Icon="<path d='M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z'/><line x1='7' y1='7' x2='7.01' y2='7'/>", Title="Genre Tags", Desc="Tag anime with genres and browse your tracker by genre", Color="#0FFFC1" },
+                new { Icon="<polyline points='22 12 18 12 15 21 9 3 6 12 2 12'/>", Title="Analytics Dashboard", Desc="Live charts: watch status, rating distribution, timeline, top genres", Color="#FF2D78" },
+                new { Icon="<path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/>", Title="For You", Desc="Weighted recommendation engine powered by your ratings and genres", Color="#FF2D78" },
+            })
             {
-                <div class="col-12" style="display:flex; align-items:flex-start; gap:24px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
-                    <div style="min-width:200px; color:#4A4D6A; font-size:0.78rem; font-weight:600; letter-spacing:0.5px; padding-top:2px;">@row.Item1</div>
-                    <div style="color:#F0F0FF; font-size:0.9rem;">@row.Item2</div>
+                <div class="col-md-6">
+                    <div style="display:flex; align-items:flex-start; gap:12px; padding:14px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:10px;">
+                        <div style="width:36px; height:36px; background:rgba(255,255,255,0.04); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="@feat.Color" stroke-width="2">@Html.Raw(feat.Icon)</svg>
+                        </div>
+                        <div>
+                            <div style="font-family:'Space Grotesk',sans-serif; font-size:0.875rem; font-weight:700; color:#F0F0FF; margin-bottom:3px;">@feat.Title</div>
+                            <div style="color:#4A4D6A; font-size:0.78rem; line-height:1.5;">@feat.Desc</div>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
@@ -116,8 +143,6 @@
                     <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; height:100%; transition:all 0.2s ease;"
                          onmouseover="this.style.borderColor='rgba(15,255,193,0.2)'; this.style.background='rgba(15,255,193,0.02)'"
                          onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'; this.style.background='rgba(255,255,255,0.02)'">
-
-                        <!-- Avatar + Name -->
                         <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
                             <div style="width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:1.3rem; font-weight:700; color:#08090E; flex-shrink:0; background:@m.Color;">
                                 @m.Initial
@@ -127,8 +152,6 @@
                                 <div style="color:#4A4D6A; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; margin-top:3px;">Developer</div>
                             </div>
                         </div>
-
-                        <!-- Links -->
                         <div style="display:flex; flex-direction:column; gap:8px;">
                             <a href="@m.GitHub" target="_blank" style="display:flex; align-items:center; gap:10px; text-decoration:none; padding:8px 10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:8px;"
                                onmouseover="this.style.borderColor='rgba(15,255,193,0.2)'"
@@ -155,14 +178,14 @@
         </div>
 
         <p style="color:#4A4D6A; font-size:0.72rem; text-align:center; letter-spacing:0.5px; margin:1.5rem 0 0;">
-            Built with ASP.NET Core MVC · Entity Framework Core · SQL Server · Bootstrap 5
+            Built with ASP.NET Core MVC · Entity Framework Core · SQL Server · Bootstrap 5 · Chart.js
         </p>
     </div>
 
     <div class="text-center mt-4">
         <a asp-controller="Anime" asp-action="Index" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
-            Go to Collection
+            Go to Tracker
         </a>
     </div>
 
