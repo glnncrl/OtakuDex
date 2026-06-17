@@ -66,6 +66,13 @@ namespace OtakuDex.Controllers
                     .ThenInclude(ag => ag.Genre)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (anime == null) return NotFound();
+
+            var assignedGenreIds = anime.AnimeGenres.Select(ag => ag.GenreId).ToList();
+            ViewBag.AvailableGenres = await _context.Genres
+                .Where(g => !assignedGenreIds.Contains(g.Id))
+                .OrderBy(g => g.Name)
+                .ToListAsync();
+
             return View(anime);
         }
 

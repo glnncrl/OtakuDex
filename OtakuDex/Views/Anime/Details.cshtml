@@ -109,6 +109,71 @@
         </div>
     </div>
 
+    <!-- Genre Tags -->
+    <div class="dex-card mb-4">
+        <div style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#4A4D6A; font-weight:600; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A4D6A" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" /><line x1="7" y1="7" x2="7.01" y2="7" /></svg>
+            Genre Tags
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:1rem;">
+            @if (!Model.AnimeGenres.Any())
+            {
+                <span style="color:#4A4D6A; font-size:0.82rem;">No genre tags yet.</span>
+            }
+            @foreach (var ag in Model.AnimeGenres)
+            {
+                <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.2); border-radius:20px; padding:4px 12px;">
+                    <a asp-controller="Genre" asp-action="Details" asp-route-id="@ag.GenreId"
+                       style="color:#0FFFC1; font-size:0.78rem; font-weight:600; text-decoration:none;">@ag.Genre?.Name</a>
+                    <form asp-controller="Genre" asp-action="RemoveFromAnime" method="post" style="margin:0; display:inline;">
+                        <input type="hidden" name="animeId" value="@Model.Id" />
+                        <input type="hidden" name="genreId" value="@ag.GenreId" />
+                        @Html.AntiForgeryToken()
+                        <button type="submit" style="background:none; border:none; cursor:pointer; padding:0; line-height:1; color:#4A4D6A; display:flex; align-items:center;"
+                                onmouseover="this.style.color='#FF2D78'"
+                                onmouseout="this.style.color='#4A4D6A'">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+
+        @{
+            var availableGenres = ViewBag.AvailableGenres as IEnumerable<OtakuDex.Models.Genre>;
+        }
+        @if (availableGenres != null && availableGenres.Any())
+        {
+            <form asp-controller="Genre" asp-action="AssignToAnime" method="post" style="display:flex; gap:8px; align-items:center;">
+                <input type="hidden" name="animeId" value="@Model.Id" />
+                @Html.AntiForgeryToken()
+                <select name="genreId" class="form-select form-select-sm" style="max-width:200px;">
+                    <option value="">Select a genre...</option>
+                    @foreach (var g in availableGenres)
+                    {
+                        <option value="@g.Id">@g.Name</option>
+                    }
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:4px;">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                    Tag Genre
+                </button>
+            </form>
+        }
+        else if (availableGenres != null && !availableGenres.Any() && Model.AnimeGenres.Any())
+        {
+            <p style="color:#4A4D6A; font-size:0.78rem; margin:0;">All available genres are already tagged.</p>
+        }
+        else
+        {
+            <a asp-controller="Genre" asp-action="Index" style="color:#0FFFC1; font-size:0.78rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                Create genres first
+            </a>
+        }
+    </div>
+
     <!-- Action Buttons -->
     <div class="d-flex gap-3 mb-5">
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning" style="display:inline-flex; align-items:center; gap:6px;">
