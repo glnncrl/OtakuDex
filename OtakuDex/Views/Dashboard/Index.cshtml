@@ -17,6 +17,15 @@
             Analytics <span style="color:#0FFFC1;">Dashboard</span>
         </h1>
         <p style="color:#4A4D6A; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase; margin-top:8px;">Your tracker insights at a glance</p>
+
+        <button id="exportCsvBtn" type="button" style="margin-top:14px; display:inline-flex; align-items:center; gap:8px; background:rgba(15,255,193,0.08); border:1px solid rgba(15,255,193,0.3); color:#0FFFC1; font-size:0.78rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; padding:9px 18px; border-radius:8px; cursor:pointer; transition:background 0.15s, transform 0.1s;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0FFFC1" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Export CSV
+        </button>
     </div>
 </div>
 
@@ -229,6 +238,113 @@
         const isDark = true;
         Chart.defaults.color = '#4A4D6A';
         Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+        // ── CSV Export ──
+        (function () {
+        const statusLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.StatusLabels as string[]));
+        const statusCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.StatusCounts as int[]));
+        const ratingLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.RatingLabels as string[]));
+        const ratingCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.RatingCounts as int[]));
+        const monthLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthLabels as string[]));
+        const monthCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.MonthCounts as int[]));
+        const genreLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.GenreLabels as string[]));
+        const genreCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.GenreCounts as int[]));
+
+        const topRated = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                    (ViewBag.TopRated as IEnumerable<OtakuDex.Models.Anime>)?.Select(a => new { a.Title, a.Rating }) ?? Enumerable.Empty<object>()
+                ));
+        const mostReviewed = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                    (ViewBag.MostReviewed as IEnumerable<OtakuDex.Models.Anime>)?.Select(a => new { a.Title, ReviewCount = a.Reviews.Count }) ?? Enumerable.Empty<object>()
+                ));
+        const topStudios = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                    ((ViewBag.TopStudios as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>())
+                        .Select(s => new { Studio = (string)s.Studio, Count = (int)s.Count })
+                ));
+
+        const keyStats = [
+        ["Total Anime", "@ViewBag.TotalAnime"],
+        ["Avg Rating", "@ViewBag.AvgRating" + "/10"],
+        ["Completion Rate", "@ViewBag.CompletionRate" + "%"],
+        ["Total Episodes", "@ViewBag.TotalEpisodes"],
+        ["Total Reviews", "@ViewBag.TotalReviews"],
+        ["Collections", "@ViewBag.TotalCollections"],
+        ["Genre Tags", "@ViewBag.TotalGenres"]
+        ];
+
+        function csvEscape(value) {
+        const str = String(value ?? "");
+        if (/[",\n]/.test(str)) {
+        return '"' + str.replace(/"/g, '""') + '"';
+        }
+        return str;
+        }
+
+        function buildCsv() {
+        const lines = [];
+
+        lines.push("Key Stats");
+        lines.push(["Metric", "Value"].map(csvEscape).join(","));
+        keyStats.forEach(row => lines.push(row.map(csvEscape).join(",")));
+        lines.push("");
+
+        lines.push("Watch Status");
+        lines.push(["Status", "Count"].map(csvEscape).join(","));
+        statusLabels.forEach((label, i) => lines.push([label, statusCounts[i]].map(csvEscape).join(",")));
+        lines.push("");
+
+        lines.push("Rating Distribution");
+        lines.push(["Rating", "Count"].map(csvEscape).join(","));
+        ratingLabels.forEach((label, i) => lines.push([label, ratingCounts[i]].map(csvEscape).join(",")));
+        lines.push("");
+
+        lines.push("Anime Added Over Time");
+        lines.push(["Month", "Count"].map(csvEscape).join(","));
+        monthLabels.forEach((label, i) => lines.push([label, monthCounts[i]].map(csvEscape).join(",")));
+        lines.push("");
+
+        lines.push("Top Genres");
+        lines.push(["Genre", "Count"].map(csvEscape).join(","));
+        genreLabels.forEach((label, i) => lines.push([label, genreCounts[i]].map(csvEscape).join(",")));
+        lines.push("");
+
+        lines.push("Top Rated Anime");
+        lines.push(["Title", "Rating"].map(csvEscape).join(","));
+        topRated.forEach(a => lines.push([a.Title, a.Rating].map(csvEscape).join(",")));
+        lines.push("");
+
+        lines.push("Most Reviewed Anime");
+        lines.push(["Title", "Review Count"].map(csvEscape).join(","));
+        mostReviewed.forEach(a => lines.push([a.Title, a.ReviewCount].map(csvEscape).join(",")));
+        lines.push("");
+
+        lines.push("Top Studios");
+        lines.push(["Studio", "Anime Count"].map(csvEscape).join(","));
+        topStudios.forEach(s => lines.push([s.Studio, s.Count].map(csvEscape).join(",")));
+
+        return lines.join("\n");
+        }
+
+        function downloadCsv() {
+        const csvContent = buildCsv();
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        const dateStr = new Date().toISOString().slice(0, 10);
+        link.href = url;
+        link.download = `analytics-export-${dateStr}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        }
+
+        const btn = document.getElementById("exportCsvBtn");
+        if (btn) {
+        btn.addEventListener("click", downloadCsv);
+        btn.addEventListener("mouseenter", () => btn.style.background = "rgba(15,255,193,0.16)");
+        btn.addEventListener("mouseleave", () => btn.style.background = "rgba(15,255,193,0.08)");
+        }
+        })();
 
         // ── Watch Status Donut ──
         new Chart(document.getElementById('statusChart'), {
