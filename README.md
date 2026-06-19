@@ -11,7 +11,7 @@
 
 ## About
 
-OtakuDex is a full stack web application for managing and tracking personal anime collections. It features CRUD operations, community reviews, custom collections, genre tagging, a live analytics dashboard, and an AI-powered recommendation engine.
+OtakuDex is a full stack web application for managing and tracking personal anime collections. It features CRUD operations, community reviews, custom collections, genre tagging, a live analytics dashboard with CSV export, an AI-powered recommendation engine, and a fully responsive interface with dark/light theming.
 
 ---
 
@@ -23,8 +23,10 @@ OtakuDex is a full stack web application for managing and tracking personal anim
 | **Reviews** | Write and manage community reviews per anime with individual ratings |
 | **Collections** | Build custom curated anime lists with cover poster grid display |
 | **Genre Tags** | Tag anime with genres and browse your entire tracker by genre |
-| **Analytics Dashboard** | Live Chart.js charts — watch status, rating distribution, timeline, top genres |
+| **Analytics Dashboard** | Live Chart.js charts — watch status, rating distribution, timeline, top genres — with one-click CSV export of all data |
 | **For You** | Weighted recommendation engine powered by your ratings, genres, and studios |
+| **Dark / Light Theme** | Toggle between dark and light mode from desktop or mobile nav, with your preference saved across visits |
+| **Responsive Design** | Collapsible mobile navigation menu for a smooth experience on any screen size |
 
 ---
 
@@ -38,6 +40,8 @@ OtakuDex is a full stack web application for managing and tracking personal anim
 | Database | Microsoft SQL Server |
 | Frontend | Razor Views, Bootstrap 5, Custom CSS |
 | Charts | Chart.js (CDN) |
+| Data Export | Client-side CSV generation (JavaScript Blob API) |
+| Theming | CSS custom properties + localStorage persistence |
 | Fonts | Space Grotesk, Inter (Google Fonts) |
 | Version Control | Git & GitHub |
 | IDE | Visual Studio 2022 |
@@ -118,7 +122,7 @@ The app will be available at `https://localhost:7140`.
 | `/Anime/Details/{id}` | Anime details with genre tags and reviews |
 | `/Collection` | My Lists — curated anime collections |
 | `/Genre` | Genre Tags — browse tracker by genre |
-| `/Dashboard` | Analytics Dashboard with live Chart.js charts |
+| `/Dashboard` | Analytics Dashboard with live Chart.js charts and CSV export |
 | `/Recommendation` | For You — personalized anime recommendations |
 | `/Home/Privacy` | About page with team info and project details |
 
@@ -136,4 +140,4 @@ The app will be available at `https://localhost:7140`.
 ---
 
 > *"The only thing we're allowed to do is believe that we won't regret the choice we made."*
-> — Levi Ackerman
+> — Levi Ackerman, Attack on Titan

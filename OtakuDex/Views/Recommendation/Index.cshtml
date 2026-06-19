@@ -112,22 +112,22 @@
                 @foreach (var rec in Model)
                 {
                     <div class="col-md-6 col-lg-4">
-                        <div class="dex-card h-100" style="transition:all 0.3s ease; position:relative; overflow:hidden;"
+                        <div class="dex-card h-100" style="transition:all 0.3s ease; position:relative; overflow:hidden; word-wrap:break-word; overflow-wrap:break-word; display:flex; flex-direction:column;"
                              onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,45,120,0.3)'"
                              onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.06)'">
 
                             <!-- Match Score Badge -->
-                            <div style="position:absolute; top:16px; right:16px; background:linear-gradient(135deg,#FF2D78,#A020F0); color:#fff; border-radius:20px; padding:4px 12px; font-size:0.72rem; font-weight:700; font-family:'Space Grotesk',sans-serif; letter-spacing:0.5px;">
+                            <div style="position:absolute; top:16px; right:16px; background:linear-gradient(135deg,#FF2D78,#A020F0); color:#fff; border-radius:20px; padding:4px 12px; font-size:0.72rem; font-weight:700; font-family:'Space Grotesk',sans-serif; letter-spacing:0.5px; white-space:nowrap; z-index:2;">
                                 @rec.MatchScore% match
                             </div>
 
-                            <div style="display:flex; gap:14px; margin-bottom:14px;">
+                            <div style="display:flex; gap:14px; margin-bottom:14px; min-width:0;">
                                 <!-- Cover -->
                                 <div style="flex-shrink:0;">
                                     @if (!string.IsNullOrEmpty(rec.Anime.CoverImageUrl))
                                     {
                                         <img src="@rec.Anime.CoverImageUrl" alt="@rec.Anime.Title"
-                                             style="width:70px; height:100px; object-fit:cover; border-radius:10px; border:1px solid rgba(255,45,120,0.2);" />
+                                             style="width:70px; height:100px; object-fit:cover; border-radius:10px; border:1px solid rgba(255,45,120,0.2); display:block;" />
                                     }
                                     else
                                     {
@@ -138,28 +138,28 @@
                                 </div>
 
                                 <!-- Info -->
-                                <div style="flex:1; min-width:0; padding-top:4px;">
-                                    <h5 style="font-family:'Space Grotesk',sans-serif; font-size:0.95rem; font-weight:700; color:#F0F0FF; margin-bottom:4px; line-height:1.3; padding-right:60px;">@rec.Anime.Title</h5>
-                                    <div style="color:#4A4D6A; font-size:0.72rem; margin-bottom:6px;">@rec.Anime.Studio · @rec.Anime.Year</div>
-                                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-                                        <span style="color:#FFD166; font-size:0.78rem; font-weight:700; display:flex; align-items:center; gap:3px;">
+                                <div style="flex:1; min-width:0; padding-top:4px; overflow:hidden;">
+                                    <h5 style="font-family:'Space Grotesk',sans-serif; font-size:0.95rem; font-weight:700; color:#F0F0FF; margin-bottom:4px; line-height:1.3; padding-right:70px; word-wrap:break-word; overflow-wrap:break-word; word-break:break-word;">@rec.Anime.Title</h5>
+                                    <div style="color:#4A4D6A; font-size:0.72rem; margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">@rec.Anime.Studio &middot; @rec.Anime.Year</div>
+                                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
+                                        <span style="color:#FFD166; font-size:0.78rem; font-weight:700; display:flex; align-items:center; gap:3px; white-space:nowrap;">
                                             <svg width="11" height="11" viewBox="0 0 24 24" fill="#FFD166" stroke="#FFD166" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                                             @rec.Anime.MalScore MAL
                                         </span>
-                                        <span style="color:#4A4D6A; font-size:0.72rem;">@rec.Anime.Episodes eps</span>
+                                        <span style="color:#4A4D6A; font-size:0.72rem; white-space:nowrap;">@rec.Anime.Episodes eps</span>
                                     </div>
                                     <!-- Genre pills -->
                                     <div style="display:flex; flex-wrap:wrap; gap:4px;">
                                         @foreach (var g in rec.Anime.Genre.Split(',').Take(3))
                                         {
-                                            <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); color:#8B8FA8; border-radius:10px; padding:2px 8px; font-size:0.65rem;">@g.Trim()</span>
+                                            <span style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); color:#8B8FA8; border-radius:10px; padding:2px 8px; font-size:0.65rem; white-space:nowrap;">@g.Trim()</span>
                                         }
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Synopsis -->
-                            <p style="color:#4A4D6A; font-size:0.78rem; line-height:1.6; margin-bottom:12px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                            <p style="color:#4A4D6A; font-size:0.78rem; line-height:1.6; margin-bottom:12px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; word-wrap:break-word;">
                                 @rec.Anime.Synopsis
                             </p>
 
@@ -170,7 +170,7 @@
                                 {
                                     <div style="display:flex; align-items:flex-start; gap:6px; margin-bottom:3px;">
                                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FF2D78" stroke-width="3" style="flex-shrink:0; margin-top:2px;"><polyline points="20 6 9 17 4 12" /></svg>
-                                        <span style="color:#8B8FA8; font-size:0.75rem; line-height:1.4;">@reason</span>
+                                        <span style="color:#8B8FA8; font-size:0.75rem; line-height:1.4; word-wrap:break-word;">@reason</span>
                                     </div>
                                 }
                             </div>
@@ -188,7 +188,7 @@
 
                             <!-- Add to Tracker button -->
                             <a asp-controller="Anime" asp-action="Create"
-                               style="display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(255,45,120,0.08); border:1px solid rgba(255,45,120,0.25); color:#FF2D78; border-radius:8px; padding:8px; text-decoration:none; font-size:0.8rem; font-weight:600; transition:all 0.2s ease;"
+                               style="display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(255,45,120,0.08); border:1px solid rgba(255,45,120,0.25); color:#FF2D78; border-radius:8px; padding:8px; text-decoration:none; font-size:0.8rem; font-weight:600; transition:all 0.2s ease; margin-top:auto;"
                                onmouseover="this.style.background='rgba(255,45,120,0.18)'"
                                onmouseout="this.style.background='rgba(255,45,120,0.08)'">
                                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
