@@ -140,4 +140,4 @@ The app will be available at `https://localhost:7140`.
 ---
 
 > *"The only thing we're allowed to do is believe that we won't regret the choice we made."*
-> — Levi Ackerman, Attack on Titan
+> — Levi Ackerman
