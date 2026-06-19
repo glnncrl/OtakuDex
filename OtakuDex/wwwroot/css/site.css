@@ -560,16 +560,11 @@ hr {
 /* Mobile */
 @media (max-width: 768px) {
 
-    .dex-nav {
-        position: sticky;
-    }
-
     .dex-menu-toggle {
         display: block;
     }
 
     .dex-nav-menu {
-        display: none !important;
         position: absolute;
         top: 60px;
         left: 0;
@@ -580,20 +575,16 @@ hr {
         flex-direction: column;
         align-items: stretch !important;
         gap: .75rem;
+        /* Hidden state */
+        opacity: 0;
+        transform: translateY(-20px);
+        visibility: hidden;
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
         .dex-nav-menu.show {
-            display: flex !important;
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
         }
-
-    .dex-nav-link,
-    .dex-nav-btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    #themeToggle {
-        width: 100%;
-        margin-right: 0 !important;
-    }
 }
