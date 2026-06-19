@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,15 +11,38 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OtakuDex.styles.css" asp-append-version="true" />
+
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+
+        menuToggle.addEventListener("click", function () {
+        navMenu.classList.toggle("show");
+        });
+
+        });
+    </script>
 </head>
+
 <body>
 
     <nav class="dex-nav">
-        <div class="container-fluid px-4 d-flex align-items-center justify-content-between" style="height:100%;">
+        <div class="container-fluid px-4 d-flex align-items-center justify-content-between position-relative" style="height:100%;">
             <a class="dex-brand" asp-controller="Home" asp-action="Index">
                 ⬡ OtakuDex
             </a>
-            <div class="d-flex align-items-center gap-2">
+            <!-- Mobile Toggle -->
+            <button class="dex-menu-toggle" id="menuToggle">
+                ☰
+            </button>
+            <!-- Navigation Menu -->
+            <div class="dex-nav-menu d-flex align-items-center gap-2" id="navMenu">
                 <a class="dex-nav-link" asp-controller="Home" asp-action="Index">Home</a>
                 <a class="dex-nav-link" asp-controller="Dashboard" asp-action="Index">Analytics</a>
                 <a class="dex-nav-link" asp-controller="Recommendation" asp-action="Index">For You</a>
@@ -27,6 +50,11 @@
                 <a class="dex-nav-link" asp-controller="Collection" asp-action="Index">Collections</a>
                 <a class="dex-nav-link" asp-controller="Genre" asp-action="Index">Genres</a>
                 <a class="dex-nav-link" asp-controller="Home" asp-action="Privacy">About</a>
+
+                <button id="themeToggle" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-color, gray); border-radius: 8px; font-size: 1.2rem; margin-right: 10px; padding: 2px 8px;">
+                    🌓
+                </button>
+
                 <a asp-controller="Anime" asp-action="Create" class="dex-nav-btn">+ Add Anime</a>
             </div>
         </div>
