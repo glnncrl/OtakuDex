@@ -4,10 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] — OtakuDex</title>
+
     <script type="importmap"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OtakuDex.styles.css" asp-append-version="true" />
@@ -16,46 +19,98 @@
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-
-        const menuToggle = document.getElementById("menuToggle");
-        const navMenu = document.getElementById("navMenu");
-
-        menuToggle.addEventListener("click", function () {
-        navMenu.classList.toggle("show");
-        });
-
-        });
-    </script>
 </head>
 
 <body>
 
     <nav class="dex-nav">
-        <div class="container-fluid px-4 d-flex align-items-center justify-content-between position-relative" style="height:100%;">
+        <div class="container-fluid px-4 d-flex align-items-center justify-content-between position-relative"
+             style="height:100%;">
+
+            <!-- Logo -->
             <a class="dex-brand" asp-controller="Home" asp-action="Index">
                 ⬡ OtakuDex
             </a>
-            <!-- Mobile Toggle -->
-            <button class="dex-menu-toggle" id="menuToggle">
-                ☰
-            </button>
-            <!-- Navigation Menu -->
-            <div class="dex-nav-menu d-flex align-items-center gap-2" id="navMenu">
-                <a class="dex-nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="dex-nav-link" asp-controller="Dashboard" asp-action="Index">Analytics</a>
-                <a class="dex-nav-link" asp-controller="Recommendation" asp-action="Index">For You</a>
-                <a class="dex-nav-link" asp-controller="Anime" asp-action="Index">Tracker</a>
-                <a class="dex-nav-link" asp-controller="Collection" asp-action="Index">Collections</a>
-                <a class="dex-nav-link" asp-controller="Genre" asp-action="Index">Genres</a>
-                <a class="dex-nav-link" asp-controller="Home" asp-action="Privacy">About</a>
 
-                <button id="themeToggle" class="btn btn-sm" style="background: transparent; border: 1px solid var(--border-color, gray); border-radius: 8px; font-size: 1.2rem; margin-right: 10px; padding: 2px 8px;">
-                    🌓
+            <!-- Desktop / Mobile Controls -->
+            <div class="d-flex align-items-center gap-2">
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle"
+                        class="theme-toggle-btn"
+                        aria-label="Toggle Theme">
+                    <span id="themeIcon" class="theme-icon"></span>
                 </button>
 
-                <a asp-controller="Anime" asp-action="Create" class="dex-nav-btn">+ Add Anime</a>
+                
+
+                <!-- Hamburger (mobile only) -->
+                <button class="dex-menu-toggle"
+                        id="menuToggle">
+                    ☰
+                </button>
+            </div>
+
+
+            <!-- Navigation -->
+            <div class="dex-nav-menu d-flex align-items-center gap-2"
+                 id="navMenu">
+
+                <a class="dex-nav-link"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    Home
+                </a>
+
+                <a class="dex-nav-link"
+                   asp-controller="Dashboard"
+                   asp-action="Index">
+                    Analytics
+                </a>
+
+                <a class="dex-nav-link"
+                   asp-controller="Recommendation"
+                   asp-action="Index">
+                    For You
+                </a>
+
+                <a class="dex-nav-link"
+                   asp-controller="Anime"
+                   asp-action="Index">
+                    Tracker
+                </a>
+
+                <a class="dex-nav-link"
+                   asp-controller="Collection"
+                   asp-action="Index">
+                    Collections
+                </a>
+
+                <a class="dex-nav-link"
+                   asp-controller="Genre"
+                   asp-action="Index">
+                    Genres
+                </a>
+
+                <a class="dex-nav-link"
+                   asp-controller="Home"
+                   asp-action="Privacy">
+                    About
+                </a>
+
+                <!-- Theme Toggle DESKTOP -->
+                <button id="themeToggleDesktop"
+                        class="theme-toggle-btn-desktop"
+                        aria-label="Toggle Theme">
+                    <span id="themeIconDesktop" class="theme-icon-desktop"></span>
+                </button>
+
+                <a asp-controller="Anime"
+                   asp-action="Create"
+                   class="dex-nav-btn">
+                    + Add Anime
+                </a>
+
             </div>
         </div>
     </nav>
@@ -66,7 +121,11 @@
         <div class="container text-center">
             <div style="color:#4A4D6A; font-size:0.8rem; letter-spacing:1px;">
                 &copy; 2026 OtakuDex &nbsp;·&nbsp;
-                <a asp-controller="Home" asp-action="Privacy" style="color:#4A4D6A; text-decoration:none;">About & Privacy</a>
+                <a asp-controller="Home"
+                   asp-action="Privacy"
+                   style="color:#4A4D6A; text-decoration:none;">
+                    About & Privacy
+                </a>
             </div>
         </div>
     </footer>
@@ -74,6 +133,23 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+
+        if (menuToggle && navMenu) {
+        menuToggle.addEventListener("click", function () {
+        navMenu.classList.toggle("show");
+        });
+        }
+
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

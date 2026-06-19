@@ -547,7 +547,14 @@ hr {
     color: var(--text-3) !important;
 }
 
-/* Hamburger Button */
+.mobile-controls {
+    display: none;
+}
+
+.desktop-theme-toggle {
+    display: flex;
+}
+
 .dex-menu-toggle {
     display: none;
     background: none;
@@ -557,8 +564,57 @@ hr {
     cursor: pointer;
 }
 
+.theme-toggle-btn {
+    display: none;
+}
+
+/* Theme Toggle */
+.theme-toggle-btn-desktop {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(123, 97, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-1);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+    .theme-toggle-btn-desktop:hover {
+        border-color: var(--purple);
+        background: rgba(123, 97, 255, 0.12);
+        transform: translateY(-1px);
+    }
+
+    .theme-toggle-btn-desktop:active {
+        transform: scale(0.96);
+    }
+
+.theme-icon-desktop {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+
 /* Mobile */
 @media (max-width: 768px) {
+
+    .theme-toggle-btn-desktop {
+        display: none;
+    }
+
+    .mobile-controls {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    .desktop-theme-toggle {
+        display: none;
+    }
 
     .dex-menu-toggle {
         display: block;
@@ -575,16 +631,51 @@ hr {
         flex-direction: column;
         align-items: stretch !important;
         gap: .75rem;
-        /* Hidden state */
         opacity: 0;
-        transform: translateY(-20px);
         visibility: hidden;
+        transform: translateY(-20px);
         transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
         .dex-nav-menu.show {
             opacity: 1;
-            transform: translateY(0);
             visibility: visible;
+            transform: translateY(0);
         }
+
+    .dex-nav-link,
+    .dex-nav-btn {
+        width: 100%;
+        text-align: center;
+    }
+    /* Theme Toggle */
+    .theme-toggle-btn {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(123, 97, 255, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--text-1);
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--purple);
+            background: rgba(123, 97, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-btn:active {
+            transform: scale(0.96);
+        }
+
+    .theme-icon {
+        font-size: 1.1rem;
+        line-height: 1;
+    }
 }
+
